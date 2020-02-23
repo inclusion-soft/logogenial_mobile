@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Letras</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-item>          
+      <img  aling="center" src="../../assets/recursos/frutas_logo.png">
+      <ion-label>Frutas {{fruta1}}</ion-label>
+    </ion-item>
+    <ion-progress-bar color="primary" value="0.33"></ion-progress-bar>
+    <!-- <ion-card-header>
+      <ion-card-subtitle>Destination</ion-card-subtitle>
+      <ion-card-title>Madison, WI</ion-card-title>
+    </ion-card-header> -->
+    <ion-card-content>
+      <img  aling="center" src="../../assets/recursos/pera.jpg">
+      <ion-item  >
+        <ion-label>Seleccione</ion-label>
+        <ion-select (ionChange)="onOptChange($event)" ok-text="Ok" cancel-text="Cancel">
+          <ion-select-option value="Manzana">Manzana</ion-select-option>
+          <ion-select-option value="Banana">Banana</ion-select-option>
+          <ion-select-option value="Pera">Pera</ion-select-option>
+          <ion-select-option value="Uva">Uva</ion-select-option>          
+        </ion-select>
+      </ion-item>
+      <ion-button (click)="evaluar($event)" slot="end">Evaluar</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+ 
+  
+  <!-- <ion-card>
+    <ion-item>     
+      <ion-label>ion-item in a card, icon left, button right</ion-label>
+      <ion-button fill="outline" slot="end">View</ion-button>
+    </ion-item>
+  
+    <ion-card-content>
+      This is content, without any paragraph or header tags,
+      within an ion-card-content element.
+    </ion-card-content>
+  </ion-card> -->
+
+
+</ion-content>
