@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'unica-respuesta',
     loadChildren: () => import('./unica-respuesta/unica-respuesta.module').then( m => m.UnicaRespuestaPageModule)
+  },
+  {
+    path: 'mensaje-respuesta-modal',
+    loadChildren: () => import('./mensaje-respuesta-modal/mensaje-respuesta-modal.module').then( m => m.MensajeRespuestaModalPageModule)
   }
 ];
 
