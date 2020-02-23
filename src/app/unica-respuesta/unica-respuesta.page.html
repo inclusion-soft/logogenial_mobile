@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Letras</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Única respuesta</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,7 +20,11 @@
       <ion-card-title>Madison, WI</ion-card-title>
     </ion-card-header> -->
     <ion-card-content>
-      <img  aling="center" src="../../assets/recursos/pera.jpg">
+      <p class="centrado">
+        <!-- <img alt="Logotipo de GNU (GNU is Not Unix)" src="../img/gnu-head-sm.jpg" title="Logotipo de GNU (GNU is Not Unix)"> -->
+        <img src="../../assets/recursos/pera.jpg">
+      </p>
+      
       <ion-item  >
         <ion-label>Seleccione</ion-label>
         <ion-select (ionChange)="onOptChange($event)" ok-text="Ok" cancel-text="Cancel">
@@ -30,20 +37,5 @@
       <ion-button (click)="evaluar($event)" slot="end">Evaluar</ion-button>
     </ion-card-content>
   </ion-card>
-
- 
-  
-  <!-- <ion-card>
-    <ion-item>     
-      <ion-label>ion-item in a card, icon left, button right</ion-label>
-      <ion-button fill="outline" slot="end">View</ion-button>
-    </ion-item>
-  
-    <ion-card-content>
-      This is content, without any paragraph or header tags,
-      within an ion-card-content element.
-    </ion-card-content>
-  </ion-card> -->
-
 
 </ion-content>

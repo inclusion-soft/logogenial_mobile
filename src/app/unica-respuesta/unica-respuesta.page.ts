@@ -12,7 +12,7 @@ export class UnicaRespuestaPage implements OnInit {
   goal: any;
   selected: any;
   dataReturned:any;
-  
+
   constructor(public toastController: ToastController, public modalController: ModalController) { }
 
   ngOnInit() {
@@ -48,34 +48,7 @@ export class UnicaRespuestaPage implements OnInit {
     return await modal.present();
   }
 
-  // async mostrarMensaje(mensaje: string, tipo: string) {
-  //   const toast = await this.toastController.create({
-  //     // header: 'Toast header',
-  //     message: mensaje,
-  //     position: 'top',
-  //     buttons: [
-  //       {
-  //         side: 'start',
-  //         icon: 'star',
-  //         text: 'Favorite',
-  //         cssClass: "toastOk",
-  //         handler: () => {
-  //           console.log('Favorite clicked');
-  //         }
-  //       }, {
-  //         text: 'Ok',
-  //         role: 'cancel',
-  //         handler: () => {
-  //           console.log('Cancel clicked');
-  //         }
-  //       }
-  //     ]
-  //   });
-  //   toast.present();
-  // }
-
   onOptChange(event){
-    debugger;
     this.selected = event.detail.value;
   }
 
