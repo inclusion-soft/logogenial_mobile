@@ -1,3 +1,10 @@
+#score_text {
+    text-shadow: 2px 2px 4px #E6F21D;
+    color: #1E7AAD;
+    background: #FFFFFF;
+    font-size: 34px;
+    }
+
 #god_job {
     left: 0px;
     width: 46px;
@@ -5,12 +12,20 @@
   }
   
   #try_again {
-    left: 0px;
-    width: 158px;
-    height: 158px;
-    background: url('../../assets/recursos/animation_varios.gif') -47px 0;
+    // left: 0px;
+    width: 175px;
+    height: 175px;
+    // background-position: 50% 50%;
+    background: url('../../assets/recursos/animation_varios.gif') 0 0;
   }
-  
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
   #victory {
     left: 129px;
     width: 43px;

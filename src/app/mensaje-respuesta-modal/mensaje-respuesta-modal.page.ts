@@ -8,6 +8,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 })
 export class MensajeRespuestaModalPage implements OnInit {
 
+  score=1400;
   modalTitle:string;
   modelId:number;
 

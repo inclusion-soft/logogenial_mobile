@@ -12,11 +12,13 @@ export class UnicaRespuestaPage implements OnInit {
   goal: any;
   selected: any;
   dataReturned:any;
-
+  sizeTest= 3;
+  score=1200;
   constructor(public toastController: ToastController, public modalController: ModalController) { }
 
   ngOnInit() {
     this.goal = 'Pera';
+    this.score = 1/this.sizeTest;
   }
 
   evaluar(event) {
