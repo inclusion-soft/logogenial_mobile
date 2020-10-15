@@ -5,7 +5,7 @@
     
     <ion-slide>
 
-      <form (ngSubmit)="login( fLogin )" #fLogin="ngForm">
+      <form (ngSubmit)="submitLogin( fLogin )" #fLogin="ngForm">
         <ion-grid fixed>
 
           <ion-row>
@@ -23,7 +23,7 @@
                     <ion-label>Email</ion-label>
                     <ion-input name="email"
                                 type="email"
-                                [(ngModel)]="loginUser.email"
+                                [(ngModel)]="loginUser.username"
                                 required></ion-input>
                   </ion-item>
 
@@ -64,35 +64,55 @@
             <!-- Avatar Selector -->
             <app-avatar-selector (avatarSel)="registerUser.avatar = $event"></app-avatar-selector>
         
-            <form (ngSubmit)="registro( fRegistro )" #fRegistro="ngForm">
+            <form (ngSubmit)="submitRegistro( fRegistro )" #fRegistro="ngForm">
                 <ion-row>
                     <ion-col>
                         
                         <ion-list>
                             
-                            <ion-item>
+                          <ion-item>
                             <ion-label>Email</ion-label>
                             <ion-input name="email" 
                                         type="email"
                                         [(ngModel)]="registerUser.email"
                                         required></ion-input>
-                            </ion-item>
+                            <ion-input name="username" 
+                                        type="hidden"
+                                        [(ngModel)]="registerUser.email"
+                                        required></ion-input>
+                          </ion-item>
 
-                            <ion-item>
+                          <ion-item>
+                            <ion-label>Apellido</ion-label>
+                            <ion-input name="apellido"
+                                        type="text"
+                                        [(ngModel)]="registerUser.apellido"
+                                        required></ion-input>
+                          </ion-item>
+
+                          <ion-item>
                             <ion-label>Nombre</ion-label>
                             <ion-input name="nombre"
                                         type="text"
                                         [(ngModel)]="registerUser.nombre"
                                         required></ion-input>
-                            </ion-item>
+                          </ion-item>
 
-                            <ion-item>
+                          <ion-item>
                             <ion-label>Password</ion-label>
                             <ion-input name="password"
                                         type="password"
                                         [(ngModel)]="registerUser.password"
                                         required></ion-input>
-                            </ion-item>
+                          </ion-item>
+
+                          <ion-item>
+                            <ion-label>Repetir Password</ion-label>
+                            <ion-input name="repetirPassword"
+                                        type="password"
+                                        [(ngModel)]="registerUser.repetirPassword"
+                                        required></ion-input>
+                          </ion-item>
 
                         </ion-list>
                     </ion-col>

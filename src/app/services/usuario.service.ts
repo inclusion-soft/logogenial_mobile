@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { NavController } from '@ionic/angular';
 import { UsuarioModel } from '../models/usuario-model';
 import { Storage } from '@ionic/storage';
+import { Observable } from 'rxjs';
 const URL = environment.url;
 
 @Injectable({
@@ -12,6 +13,7 @@ const URL = environment.url;
 export class UsuarioService {
 
   token: string = null;
+  urlService = 'v1/usuario-api';
   private usuario: UsuarioModel = new UsuarioModel();
  
    constructor( private http: HttpClient,
@@ -51,42 +53,26 @@ export class UsuarioService {
      this.navCtrl.navigateRoot('/login', { animated: true });
    }
 
-   registro( usuario: UsuarioModel ) {
+   register(data: UsuarioModel): Observable<any> {
+    const endPoint = URL + this.urlService + '/create';
+    return this.http.post<any>(endPoint, data);
+  }
 
-     return new Promise( resolve => {
- 
-       this.http.post(`${ URL }/user/create`, usuario )
-           .subscribe( async resp => {
-             console.log(resp);
- 
-             if ( resp['ok'] ) {
-               await this.guardarToken( resp['token'] );
-               resolve(true);
-             } else {
-               this.token = null;
-               this.storage.clear();
-               resolve(false);
-             }
- 
-           });
- 
- 
-     });
- 
- 
-   }
- 
+  attemptAuth(credentials: any): Observable<any> {
+    const endPoint = URL + 'api/auth/login';
+    return this.http.post<any>(endPoint, credentials);
+  }
+
    getUsuario() {
- 
+
      if ( !this.usuario.id ) {
        this.validaToken();
      }
- 
+
      return { ...this.usuario };
- 
+
    }
- 
- 
+
    async guardarToken( token: string ) {
  
      this.token = token;

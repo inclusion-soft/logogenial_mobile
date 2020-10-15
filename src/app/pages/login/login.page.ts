@@ -15,15 +15,15 @@ export class LoginPage implements OnInit {
   @ViewChild('slidePrincipal', null) slides: IonSlides;
 
   loginUser = {
-    email: 'test1@test.com',
-    password: '123456'
+    username: '',
+    password: ''
   };
 
   registerUser: UsuarioModel =  {
-    email: 'test@mail.co',
-    password: '123456',
-    nombre: 'Test',
-    apellido: 'Test',
+    email: '',
+    password: '',
+    nombre: '',
+    apellido: '',
     avatar: 'av-1.png',
     repetirPassword: null,
     rol: '',
@@ -40,37 +40,56 @@ export class LoginPage implements OnInit {
     this.slides.lockSwipes( true );
   }
 
-  async login( fLogin: NgForm ) {
+  // async login( fLogin: NgForm ) {
 
-    if ( fLogin.invalid ) { return; }
+  //   if ( fLogin.invalid ) { return; }
 
-    const valido = await this.usuarioService.login( this.loginUser.email, this.loginUser.password );
+  //   const valido = await this.usuarioService.login( this.loginUser.email, this.loginUser.password );
 
-    if ( valido ) {
-      // navegar al tabs
-      this.navCtrl.navigateRoot( '/main/tabs/tab1', { animated: true } );
-    } else {
-      // mostrar alerta de usuario y contraseña no correctos
-      this.uiService.alertaInformativa('Usuario y contraseña no son correctos.');
+  //   if ( valido ) {
+  //     // navegar al tabs
+  //     this.navCtrl.navigateRoot( '/main/tabs/tab1', { animated: true } );
+  //   } else {
+  //     // mostrar alerta de usuario y contraseña no correctos
+  //     this.uiService.alertaInformativa('Usuario y contraseña no son correctos.');
+  //   }
+  // }
+
+  submitLogin(fRegistro: NgForm ): void {
+    if ( fRegistro.form.controls['password'].valid) {
+      this.usuarioService.attemptAuth(this.loginUser).subscribe(
+        (respuesta: any) => {
+          this.usuarioService.guardarToken(respuesta.token);
+          this.navCtrl.navigateRoot( '/unica-respuesta', { animated: true } );
+        }, err => {
+          this.uiService.alertaInformativa('Se presentó un erro. Favor comuniquese con el administrador.');
+        });
     }
   }
 
-  async registro( fRegistro: NgForm ) {
-
-    if ( fRegistro.invalid ) { return; }
-
-    const valido = await this.usuarioService.registro( this.registerUser );
-
-    if ( valido ) {
-      // navegar al tabs
-      this.navCtrl.navigateRoot( '/main/tabs/tab1', { animated: true } );
-    } else {
-      // mostrar alerta de usuario y contraseña no correctos
-      this.uiService.alertaInformativa('Ese correo electrónico ya existe.');
+  submitRegistro(fRegistro: NgForm ): void {
+    this.registerUser.username = fRegistro.form.controls['username'].value;
+    if ( fRegistro.valid ) {
+        this.usuarioService.register(this.registerUser).subscribe( (r: any) => {
+          this.usuarioService.attemptAuth(this.registerUser).subscribe(
+            (respuesta: any) => {
+              this.usuarioService.guardarToken(respuesta.token);
+              this.navCtrl.navigateRoot( '/unica-respuesta', { animated: true } );
+            }, err => {
+              this.uiService.alertaInformativa('Se presentó un erro. Favor comuniquese con el administrador.');
+           });
+        }, err => {
+            if ( err.status === 404 ) {
+              this.uiService.alertaInformativa('No fue posible la conexión con el servidor.');
+            }
+            if ( err.status === 302 ) {
+              this.uiService.alertaInformativa('El usuario ya existe.');
+            } else {
+              this.uiService.alertaInformativa('Se presentó un erro. Favor comuniquese con el administrador.');
+            }
+        });
     }
-
   }
-
 
   mostrarRegistro() {
     this.slides.lockSwipes(false);
