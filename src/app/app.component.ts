@@ -15,19 +15,24 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Única respuesta',
-      url: '/unica-respuesta',
-      icon: 'bus'
+      title: 'Lecciones',
+      url: '/lecciones-select',
+      icon: 'game-controller'
     },
     {
-      title: 'Inbox',
-      url: '/folder/Inbox',
-      icon: 'mail'
+      title: 'Resultados',
+      url: '/resultado-admin',
+      icon: 'stats-chart'
     },
     {
-      title: 'Outbox',
-      url: '/folder/Outbox',
-      icon: 'paper-plane'
+      title: 'Grupos',
+      url: '/grupos-admin',
+      icon: 'home'
+    },
+    {
+      title: 'Mis perfil',
+      url: '/perfil-edit',
+      icon: 'person'
     }
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
