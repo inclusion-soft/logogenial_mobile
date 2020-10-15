@@ -7,7 +7,7 @@ import { ImagenPipe } from './imagen.pipe';
 
 
 @NgModule({
-  declarations: [DomSanitizerPipe, ImageSanitizerPipe],
+  declarations: [DomSanitizerPipe, ImageSanitizerPipe, ImagenPipe],
   imports: [
     CommonModule
   ],

@@ -17,10 +17,10 @@ import { IonicStorageModule } from '@ionic/storage';
   entryComponents: [MensajeRespuestaModalPage],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
     HttpClientModule,
-    IonicStorageModule.forRoot()
+    IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [
     StatusBar,
