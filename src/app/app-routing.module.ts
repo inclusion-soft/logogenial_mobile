@@ -18,7 +18,11 @@ const routes: Routes = [
   {
     path: 'mensaje-respuesta-modal',
     loadChildren: () => import('./mensaje-respuesta-modal/mensaje-respuesta-modal.module').then( m => m.MensajeRespuestaModalPageModule)
+  },  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   }
+
 ];
 
 @NgModule({

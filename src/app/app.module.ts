@@ -9,6 +9,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MensajeRespuestaModalPage } from './mensaje-respuesta-modal/mensaje-respuesta-modal.page';
+import { HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [AppComponent, MensajeRespuestaModalPage],
@@ -16,7 +18,9 @@ import { MensajeRespuestaModalPage } from './mensaje-respuesta-modal/mensaje-res
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot()
   ],
   providers: [
     StatusBar,
