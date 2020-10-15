@@ -40,21 +40,6 @@ export class LoginPage implements OnInit {
     this.slides.lockSwipes( true );
   }
 
-  // async login( fLogin: NgForm ) {
-
-  //   if ( fLogin.invalid ) { return; }
-
-  //   const valido = await this.usuarioService.login( this.loginUser.email, this.loginUser.password );
-
-  //   if ( valido ) {
-  //     // navegar al tabs
-  //     this.navCtrl.navigateRoot( '/main/tabs/tab1', { animated: true } );
-  //   } else {
-  //     // mostrar alerta de usuario y contraseña no correctos
-  //     this.uiService.alertaInformativa('Usuario y contraseña no son correctos.');
-  //   }
-  // }
-
   submitLogin(fRegistro: NgForm ): void {
     if ( fRegistro.form.controls['password'].valid) {
       this.usuarioService.attemptAuth(this.loginUser).subscribe(
