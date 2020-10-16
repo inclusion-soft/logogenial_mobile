@@ -20,10 +20,15 @@ export class LeccionesSelectPage implements OnInit {
     this.cargarLecciones();
   }
 
-  cargarLecciones() {
-    const informacionUsuario = this.usuarioService.getInformacion();
-    this.leccionesService.findAllGroupsByEstudianteId(informacionUsuario.id).subscribe( grupos => {
+  async cargarLecciones() {
+    const informacionUsuario = await this.usuarioService.getInformacionPromise();
+    const info = informacionUsuario as any;
+    this.leccionesService.findAllGroupsByEstudianteId(info.id).subscribe( grupos => {
       this.grupos = grupos;
     });
+  }
+
+  onSeleccionar(grupo:Event) {
+    console.log(grupo);
   }
 }

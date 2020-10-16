@@ -12,6 +12,7 @@ import { MensajeRespuestaModalPage } from './mensaje-respuesta-modal/mensaje-res
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthInterceptor } from './seguridad/auth-interceptor';
+import { SQLite } from '@ionic-native/sqlite/ngx';
 
 @NgModule({
   declarations: [AppComponent, MensajeRespuestaModalPage],
@@ -20,12 +21,18 @@ import { AuthInterceptor } from './seguridad/auth-interceptor';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot(
+      {
+        name: 'logogenius_db',
+        driverOrder: ['indexeddb', 'sqlite', 'websql']
+      }
+    ),
     AppRoutingModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    SQLite,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
