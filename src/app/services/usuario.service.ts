@@ -13,6 +13,7 @@ const URL = environment.url;
 export class UsuarioService {
 
   token: string = null;
+  informacion: string = null;
   urlService = 'v1/usuario-api';
   private usuario: UsuarioModel = new UsuarioModel();
  
@@ -74,26 +75,31 @@ export class UsuarioService {
    }
 
    async guardarToken( token: string ) {
- 
+
      this.token = token;
      await this.storage.set('token', token);
- 
-     await this.validaToken();
- 
- 
+
+     //await this.validaToken();
+
+
    }
- 
+
    async cargarToken() {
- 
+
      this.token = await this.storage.get('token') || null;
- 
    }
- 
- 
+
+   getInformacion(): UsuarioModel {
+    this.cargarToken();
+    const informacionUsuario = JSON.parse(atob(this.token.split('.')[1]));
+    return informacionUsuario;
+   }
+
+
    async validaToken(): Promise<boolean> {
- 
+
      await this.cargarToken();
- 
+
      if ( !this.token ) {
        this.navCtrl.navigateRoot('/login');
        return Promise.resolve(false);

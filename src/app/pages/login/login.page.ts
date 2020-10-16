@@ -45,7 +45,7 @@ export class LoginPage implements OnInit {
       this.usuarioService.attemptAuth(this.loginUser).subscribe(
         (respuesta: any) => {
           this.usuarioService.guardarToken(respuesta.token);
-          this.navCtrl.navigateRoot( '/unica-respuesta', { animated: true } );
+          this.navCtrl.navigateRoot( '/lecciones-select', { animated: true } );
         }, err => {
           this.uiService.alertaInformativa('Se presentó un erro. Favor comuniquese con el administrador.');
         });
@@ -59,7 +59,7 @@ export class LoginPage implements OnInit {
           this.usuarioService.attemptAuth(this.registerUser).subscribe(
             (respuesta: any) => {
               this.usuarioService.guardarToken(respuesta.token);
-              this.navCtrl.navigateRoot( '/unica-respuesta', { animated: true } );
+              this.navCtrl.navigateRoot( '/lecciones-select', { animated: true } );
             }, err => {
               this.uiService.alertaInformativa('Se presentó un erro. Favor comuniquese con el administrador.');
            });
