@@ -11,8 +11,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./lecciones-select.page.scss'],
 })
 export class LeccionesSelectPage implements OnInit {
-  lecciones: Observable<any>; //LeccionModel[] = [];
-  grupos: Observable<any>; // BasicModel[] = [];
+  lecciones: Observable<any>;
+  grupos: Observable<any>;
   constructor(private leccionesService: LeccionesService,
               private usuarioService: UsuarioService) { }
 
@@ -28,7 +28,7 @@ export class LeccionesSelectPage implements OnInit {
     });
   }
 
-  onSeleccionar(grupo:Event) {
+  onSeleccionar(grupo: Event) {
     console.log(grupo);
   }
 }

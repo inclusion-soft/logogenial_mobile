@@ -9,7 +9,14 @@
 
 <ion-content>
 
-    <ion-list>     
+  <ion-card>
+    <ion-item color="primary">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>Grupos</ion-label>
+    </ion-item>
+    
+    <ion-card-content>
+      <ion-list>     
         <ion-item *ngFor="let grupo of grupos">
           <ion-card>
             <img src="../../../assets/recursos/start-ideas.jpg">
@@ -21,7 +28,11 @@
             <ion-card-content>
               <ion-label>
                  <h3>Por {{ grupo.usuario.nombre }}</h3>  
+                 <ion-img class="pick-avatar" 
+                    src="../../../assets/avatars/{{ grupo.usuario.avatar  }}"
+                    [ngClass]="'selecionado'"></ion-img>
               </ion-label>
+              
               <ion-button (click)="onSeleccionar(grupo)" expand="full">
                 <ion-icon slot="start" name="add"></ion-icon>
                 Seleccionar
@@ -32,5 +43,10 @@
         </ion-item>
 
     </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+  
+   
 
 </ion-content>
