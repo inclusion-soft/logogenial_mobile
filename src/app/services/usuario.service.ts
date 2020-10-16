@@ -12,7 +12,7 @@ const URL = environment.url;
 })
 export class UsuarioService {
 
-  token: string = null;
+  private token: string = null;
   informacion: string = null;
   urlService = 'v1/usuario-api';
   private usuario: UsuarioModel = new UsuarioModel();
@@ -75,13 +75,9 @@ export class UsuarioService {
    }
 
    async guardarToken( token: string ) {
-
      this.token = token;
      await this.storage.set('token', token);
-
      //await this.validaToken();
-
-
    }
 
    async cargarToken() {
@@ -93,6 +89,11 @@ export class UsuarioService {
     this.cargarToken();
     const informacionUsuario = JSON.parse(atob(this.token.split('.')[1]));
     return informacionUsuario;
+   }
+
+   getToken(): string {
+    this.cargarToken();
+    return this.token;
    }
 
 
