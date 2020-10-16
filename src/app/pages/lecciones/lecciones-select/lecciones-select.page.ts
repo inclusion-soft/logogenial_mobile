@@ -4,6 +4,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { LeccionModel } from 'src/app/models/leccion-model';
 import { BasicModel } from 'src/app/models/basic-model';
 import { Observable } from 'rxjs';
+import { UsuarioModel } from 'src/app/models/usuario-model';
 
 @Component({
   selector: 'app-lecciones-select',
@@ -13,6 +14,10 @@ import { Observable } from 'rxjs';
 export class LeccionesSelectPage implements OnInit {
   lecciones: Observable<any>;
   grupos: Observable<any>;
+  niveles: Observable<any>;
+  temas: Observable<any>;
+  usuario: UsuarioModel = new UsuarioModel();
+  formSelected = 'grupos';
   constructor(private leccionesService: LeccionesService,
               private usuarioService: UsuarioService) { }
 
@@ -23,12 +28,44 @@ export class LeccionesSelectPage implements OnInit {
   async cargarLecciones() {
     const informacionUsuario = await this.usuarioService.getInformacionPromise();
     const info = informacionUsuario as any;
-    this.leccionesService.findAllGroupsByEstudianteId(info.id).subscribe( grupos => {
+    this.usuario = info;
+    this.leccionesService.findAllGroupsByEstudianteId(this.usuario.id).subscribe( grupos => {
       this.grupos = grupos;
     });
   }
 
-  onSeleccionar(grupo: Event) {
-    console.log(grupo);
+  onSeleccionarGrupo(grupo: any) {
+    this.cargarNiveles(grupo.id);
+  }
+
+  cargarNiveles(grupoId) {
+    this.leccionesService.findAllNivelesByGrupoId(grupoId).subscribe( niveles => {
+      this.niveles = niveles;
+      this.formSelected = 'niveles';
+    });
+  }
+
+  onSeleccionarNivel(grupoNivel: any) {
+    this.cargarTemas(grupoNivel.id);
+  }
+
+  // tslint:disable-next-line: adjacent-overload-signatures
+  cargarTemas(grupoNivelId) {
+    this.leccionesService.findAllTemasByGrupoNivelId(grupoNivelId).subscribe( temas => {
+      this.temas = temas;
+      this.formSelected = 'temas';
+    });
+  }
+
+  volverGrupos() {
+    this.formSelected = 'grupos';
+  }
+
+  volverNiveles() {
+    this.formSelected = 'niveles';
+  }
+
+  onSeleccionarTema(grupoNivelTemaId) {
+
   }
 }

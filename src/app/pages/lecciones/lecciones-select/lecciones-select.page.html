@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <ion-card>
+  <ion-card *ngIf="formSelected === 'grupos'">
     <ion-item color="primary">
       <ion-icon slot="start" name="home"></ion-icon>
       <ion-label>Grupos</ion-label>
@@ -33,8 +33,42 @@
                     [ngClass]="'selecionado'"></ion-img>
               </ion-label>
               
-              <ion-button (click)="onSeleccionar(grupo)" expand="full">
-                <ion-icon slot="start" name="add"></ion-icon>
+              <ion-button (click)="onSeleccionarGrupo(grupo)" expand="full">
+                <ion-icon slot="end" name="ios-arrow-dropright-outline"></ion-icon>
+                Seleccionar
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+
+        </ion-item>
+
+    </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+
+  
+  <ion-card *ngIf="formSelected === 'niveles'">
+    <ion-item color="primary">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>Niveles</ion-label>
+      <ion-button (click)="volverGrupos()" color="light" >
+        <ion-icon slot="end" name="arrow-back"></ion-icon>
+        
+      </ion-button>
+    </ion-item>
+    
+    <ion-card-content>
+      <ion-list>     
+        <ion-item *ngFor="let nivel of niveles">
+          <ion-card>            
+            <ion-card-content>
+              <ion-label>
+                 <h3> {{ nivel.nivel.nombre }}</h3>                  
+              </ion-label>
+              
+              <ion-button (click)="onSeleccionarNivel(nivel)" expand="full">
+                <ion-icon slot="end" name="ios-arrow-dropright"></ion-icon>
                 Seleccionar
               </ion-button>
             </ion-card-content>
@@ -47,6 +81,37 @@
 
   </ion-card>
   
-   
+  <ion-card *ngIf="formSelected === 'temas'">
+    <ion-item color="primary">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>Temas</ion-label>
+      <ion-button (click)="volverNiveles()" color="light" >
+        <ion-icon slot="end" name="arrow-back"></ion-icon>
+        
+      </ion-button>
+    </ion-item>
+    
+    <ion-card-content>
+      <ion-list>     
+        <ion-item *ngFor="let niveltema of temas">
+          <ion-card>            
+            <ion-card-content>
+              <ion-label>
+                 <h3> {{ niveltema.tema.nombre }}</h3>                  
+              </ion-label>
+              
+              <ion-button (click)="onSeleccionarTema(nivelTema)" expand="full">
+                <ion-icon slot="end" name="ios-arrow-dropright"></ion-icon>
+                Seleccionar
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+
+        </ion-item>
+
+    </ion-list>
+    </ion-card-content>
+
+  </ion-card>
 
 </ion-content>
