@@ -22,10 +22,10 @@ export class LeccionesSelectPage implements OnInit {
               private usuarioService: UsuarioService) { }
 
   ngOnInit() {
-    this.cargarLecciones();
+    this.cargarGrupos();
   }
 
-  async cargarLecciones() {
+  async cargarGrupos() {
     const informacionUsuario = await this.usuarioService.getInformacionPromise();
     const info = informacionUsuario as any;
     this.usuario = info;
@@ -65,7 +65,19 @@ export class LeccionesSelectPage implements OnInit {
     this.formSelected = 'niveles';
   }
 
-  onSeleccionarTema(grupoNivelTemaId) {
+  volverTemas() {
+    this.formSelected = 'temas';
+  }
 
+  onSeleccionarTema(grupoNivelTemaId) {
+    this.cargarLecciones(grupoNivelTemaId.id);
+  }
+
+  // tslint:disable-next-line: adjacent-overload-signatures
+  cargarLecciones(grupoNivelTemaId) {
+    this.leccionesService.findAllLeccionesByGrupoNivelTemaId(grupoNivelTemaId).subscribe( lecciones => {
+      this.lecciones = lecciones;
+      this.formSelected = 'lecciones';
+    });
   }
 }

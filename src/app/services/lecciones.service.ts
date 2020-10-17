@@ -41,5 +41,9 @@ export class LeccionesService  {
     const endpoint = environment.url +  'v1/grupo-nivel-tema-api/findAllByGrupoNivelId/' + grupoNivelId;
     return this.http.get<BasicModel[]>(endpoint);
   }
-  
+
+  findAllLeccionesByGrupoNivelTemaId(grupoNivelTemaId: number): Observable<any> {
+    const endpoint = environment.url +  'v1/lecciones-api/findAllByGrupoNivelTemaId/' + grupoNivelTemaId;
+    return this.http.get<BasicModel[]>(endpoint);
+  }
 }
