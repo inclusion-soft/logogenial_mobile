@@ -80,4 +80,8 @@ export class LeccionesSelectPage implements OnInit {
       this.formSelected = 'lecciones';
     });
   }
+
+  onSeleccionarLeccion(leccion) {
+
+  }
 }

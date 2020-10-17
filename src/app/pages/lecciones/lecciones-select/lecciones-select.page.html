@@ -3,12 +3,15 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Grupos</ion-title>
+    <ion-title>Lecciones</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-text color="dark" >
+    <h5 class="ml-10">Selecciona tu lección</h5>
+  </ion-text>
+  
   <ion-card *ngIf="formSelected === 'grupos'">
     <ion-item color="primary">
       <ion-icon slot="start" name="home"></ion-icon>
@@ -120,30 +123,40 @@
       <ion-label>Lecciones</ion-label>
       <ion-button (click)="volverTemas()" color="light" >
         <ion-icon slot="end" name="arrow-back"></ion-icon>
-        
       </ion-button>
     </ion-item>
     
-    <ion-card-content>
-      <ion-list>     
-        <ion-item *ngFor="let leccion of lecciones">
-          <ion-card>            
-            <ion-card-content>
-              <ion-label>
-                 <h3> {{ leccion.leyenda }}</h3>                  
-              </ion-label>
-              
-              <ion-button (click)="onSeleccionarTema(leccion)" expand="full">
-                <ion-icon slot="end" name="ios-arrow-dropright"></ion-icon>
-                Seleccionar
-              </ion-button>
-            </ion-card-content>
-          </ion-card>
-
-        </ion-item>
-
-    </ion-list>
-    </ion-card-content>
+    <ion-slides pager="ios" class="slide-full" *ngIf="formSelected === 'lecciones'">
+      <ion-slide *ngFor="let leccion of lecciones">
+        <ion-card mode="ios">
+          <img src="../../../assets/recursos/start-ideas.jpg" class="slide-image" />
+  
+          <ion-card-header>
+            <ion-card-subtitle>{{ leccion.leyenda }}</ion-card-subtitle>
+          </ion-card-header>
+  
+          <ion-card-content>
+            {{ leccion.leyenda }}
+            <ion-button (click)="onSeleccionarLeccion(leccion)" expand="full">
+              <ion-icon slot="end" name="ios-arrow-dropright"></ion-icon>
+              Seleccionar
+            </ion-button>
+          </ion-card-content>
+  
+        </ion-card>
+  
+  
+      </ion-slide>
+  
+  
+      <!-- <ion-slide>
+        <ion-button  expand="block" fill="clear">
+          Comenzar
+        </ion-button>
+      </ion-slide> -->
+  
+  
+    </ion-slides>
 
   </ion-card>
 
