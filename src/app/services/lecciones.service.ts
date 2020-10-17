@@ -19,6 +19,10 @@ export class LeccionesService  {
     this.urlService = environment.url + this.urlService;
   }
 
+  public getUrlBase() {
+    return environment.url + 'v1/archivo-api';
+  }
+
   findAllByGrupoNivelTemaId(grupoNivelTemaId: number): Observable<LeccionModel[]> {
     const endpoint = this.urlService +  '/findAllByGrupoNivelTemaId/' + grupoNivelTemaId;
     return this.http.get<LeccionModel[]>(endpoint);
@@ -43,7 +47,7 @@ export class LeccionesService  {
   }
 
   findAllLeccionesByGrupoNivelTemaId(grupoNivelTemaId: number): Observable<any> {
-    const endpoint = environment.url +  'v1/lecciones-api/findAllByGrupoNivelTemaId/' + grupoNivelTemaId;
+    const endpoint = environment.url +  'v1/leccion-consulta-api/findAllByGrupoNivelTemaId/' + grupoNivelTemaId;
     return this.http.get<BasicModel[]>(endpoint);
   }
 }
