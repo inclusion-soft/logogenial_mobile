@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-leccion-ejecucion',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeccionEjecucionPage implements OnInit {
 
-  constructor() { }
+  leccionId = null;
+  constructor(private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit() {
-  }
-
+ ngOnInit() {
+   this.leccionId = this.activatedRoute.snapshot.paramMap.get('id');
+ }
+ 
 }

@@ -5,6 +5,7 @@ import { LeccionModel } from 'src/app/models/leccion-model';
 import { BasicModel } from 'src/app/models/basic-model';
 import { Observable } from 'rxjs';
 import { UsuarioModel } from 'src/app/models/usuario-model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lecciones-select',
@@ -19,7 +20,8 @@ export class LeccionesSelectPage implements OnInit {
   usuario: UsuarioModel = new UsuarioModel();
   formSelected = 'grupos';
   constructor(private leccionesService: LeccionesService,
-              private usuarioService: UsuarioService) { }
+              private usuarioService: UsuarioService,
+              private router: Router) { }
 
   ngOnInit() {
     this.cargarGrupos();
@@ -82,6 +84,7 @@ export class LeccionesSelectPage implements OnInit {
   }
 
   onSeleccionarLeccion(leccion) {
-
+    // tslint:disable-next-line: no-unused-expression
+    this.router.navigate['/leccion-ejecucion'];
   }
 }

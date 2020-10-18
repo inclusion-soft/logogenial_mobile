@@ -138,7 +138,7 @@
           <ion-card-content>
             <ion-badge color="warning">{{leccion.cantidadPreguntas}}</ion-badge>
             {{ leccion.leyenda }}            
-            <ion-button (click)="onSeleccionarLeccion(leccion)" expand="full">
+            <ion-button [routerLink]="['../leccion-ejecucion/']+ leccion.id" expand="full">
               <ion-icon slot="end" name="ios-arrow-dropright"></ion-icon>
               Seleccionar
             </ion-button>

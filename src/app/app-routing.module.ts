@@ -28,7 +28,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/lecciones/lecciones-select/lecciones-select.module').then( m => m.LeccionesSelectPageModule)
   },
   {
-    path: 'leccion-ejecucion',
+    path: 'leccion-ejecucion/:id',
     loadChildren: () => import('./pages/lecciones/leccion-ejecucion/leccion-ejecucion.module').then( m => m.LeccionEjecucionPageModule)
   },
   {
