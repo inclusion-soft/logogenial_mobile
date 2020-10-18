@@ -50,4 +50,15 @@ export class LeccionesService  {
     const endpoint = environment.url +  'v1/leccion-consulta-api/findAllByGrupoNivelTemaId/' + grupoNivelTemaId;
     return this.http.get<BasicModel[]>(endpoint);
   }
+
+  findAllPreguntasByLeccionId(leccionId: number): Observable<any> {
+    const endpoint = environment.url +  'v1/preguntas-api/findAllByLeccionId/' + leccionId;
+    return this.http.get<BasicModel[]>(endpoint);
+  }
+
+  findAllRespuestasByPreguntaId(leccionId: number): Observable<any> {
+    const endpoint = environment.url +  'v1/opcion-respuestas-api/findAllByPreguntaId/' + leccionId;
+    return this.http.get<BasicModel[]>(endpoint);
+  }
+
 }

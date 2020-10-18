@@ -8,4 +8,40 @@
 </ion-header>
 
 <ion-content>
+  
+  <ion-card *ngIf="preguntaActual !== undefined">
+    <ion-item color="primary">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>{{preguntaActual.leccion.leyenda}}</ion-label>
+      <ion-button (click)="volverSeleccionarLeccion()" color="light" >
+        <ion-icon slot="end" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+    <ion-card-content>
+      <ion-card-header>
+        <ion-card-title  *ngIf="mostrarRespuesta === true" class="ion-text-center" >{{preguntaActual.respuesta.frase}}</ion-card-title>
+      </ion-card-header>
+
+      <img  class="height-leccion-image" src="{{ leccionesService.getUrlBase() }}/getById/{{preguntaActual.respuesta.archivoId}}"  alt="{{ preguntaActual.descripcion }}"  >
+      <ion-list>     
+        <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuesta(respuesta)" 
+        [color]="respuesta?.id ===  respuestaSeleccionada?.id? 'warning': ''">
+          <ion-label>
+            <h3> {{ respuesta.opcion.nombre }}</h3>                  
+         </ion-label>
+        </ion-item>
+        <br>
+        <ion-button [disabled]="respuestaSeleccionada === undefined" (click)="onSeleccionarRespuesta()" expand="block" color="success">
+          <ion-icon name="checkmark-circle-outline" slot="end"></ion-icon>
+          Responder
+        </ion-button>
+        <ion-button (click)="onMostrarRespuesta()" expand="block" color="tertiary">
+          <ion-icon name="help-circle-outline" slot="end" ></ion-icon>
+          Ayuda
+        </ion-button>
+    </ion-list>
+    </ion-card-content>
+
+  </ion-card>
 </ion-content>
