@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>respuesta-pregunta-modal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-text color="tertiary">
+    <h1  class="ion-text-center" >{{pregunta.respuesta.frase}}</h1>
+  </ion-text>
+  <img  class="height-leccion-image" src="{{ leccionesService.getUrlBase() }}/getById/{{pregunta.respuesta.archivoId}}"  alt="{{ pregunta.descripcion }}"  >
+  <ion-text color="tertiary">    
+    <h1 class="ion-text-center"> {{ respuesta.opcion.nombre }}</h1>  
+  </ion-text>
+  <ion-button (click)="salirSinArgumentos()" expand="block">
+    Continuar
+  </ion-button>
+</ion-content>

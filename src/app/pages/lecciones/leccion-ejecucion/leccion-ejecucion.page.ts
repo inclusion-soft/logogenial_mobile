@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LeccionesService } from 'src/app/services/lecciones.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ModalController } from '@ionic/angular';
+import { RespuestaPreguntaModalPage } from '../../respuesta-pregunta-modal/respuesta-pregunta-modal.page';
 
 @Component({
   selector: 'app-leccion-ejecucion',
@@ -21,7 +23,8 @@ export class LeccionEjecucionPage implements OnInit {
   mostrarRespuesta = false;
 
   constructor(private activatedRoute: ActivatedRoute,
-    private leccionesService: LeccionesService) { }
+              private leccionesService: LeccionesService,
+              private modalCtrl: ModalController ) { }
 
  ngOnInit() {
    this.leccionId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -85,6 +88,25 @@ export class LeccionEjecucionPage implements OnInit {
 
  onMostrarRespuesta() {
    this.mostrarRespuesta = true;
+ }
+
+ async onResponder() {
+  const modal = await this.modalCtrl.create({
+    component: RespuestaPreguntaModalPage,
+    componentProps: {
+      leccionId: this.leccionId,
+      pregunta: this.preguntaActual,
+      respuesta: this.respuestaSeleccionada
+    }
+  });
+
+  await modal.present();
+
+  // const { data } = await modal.onDidDismiss();
+  const { data } = await modal.onWillDismiss();
+  console.log('onWillDismiss');
+
+  console.log(data);
  }
 
 }

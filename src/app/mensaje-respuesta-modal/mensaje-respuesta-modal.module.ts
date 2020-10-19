@@ -15,6 +15,7 @@ import { MensajeRespuestaModalPage } from './mensaje-respuesta-modal.page';
     IonicModule,
     MensajeRespuestaModalPageRoutingModule
   ],
-  declarations: [MensajeRespuestaModalPage]
+  declarations: [MensajeRespuestaModalPage],
+  exports: [MensajeRespuestaModalPage]
 })
 export class MensajeRespuestaModalPageModule {}

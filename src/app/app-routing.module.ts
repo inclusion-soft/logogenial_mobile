@@ -43,8 +43,6 @@ const routes: Routes = [
     path: 'perfil-edit',
     loadChildren: () => import('./pages/perfil/perfil-edit/perfil-edit.module').then( m => m.PerfilEditPageModule)
   }
-
-  //{ path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
 ];
 
 @NgModule({

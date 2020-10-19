@@ -13,13 +13,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { AuthInterceptor } from './seguridad/auth-interceptor';
 import { SQLite } from '@ionic-native/sqlite/ngx';
+import { MensajeRespuestaModalPageModule } from './mensaje-respuesta-modal/mensaje-respuesta-modal.module';
 
 @NgModule({
-  declarations: [AppComponent, MensajeRespuestaModalPage],
-  entryComponents: [MensajeRespuestaModalPage],
+  declarations: [AppComponent],
+  entryComponents: [],
   imports: [
     BrowserModule,
     HttpClientModule,
+    MensajeRespuestaModalPageModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(
       {
