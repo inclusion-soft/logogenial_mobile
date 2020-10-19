@@ -14,6 +14,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { AuthInterceptor } from './seguridad/auth-interceptor';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { MensajeRespuestaModalPageModule } from './mensaje-respuesta-modal/mensaje-respuesta-modal.module';
+import { RespuestaPreguntaModalPageModule } from './pages/respuesta-pregunta-modal/respuesta-pregunta-modal.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { MensajeRespuestaModalPageModule } from './mensaje-respuesta-modal/mensa
     BrowserModule,
     HttpClientModule,
     MensajeRespuestaModalPageModule,
+    RespuestaPreguntaModalPageModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(
       {

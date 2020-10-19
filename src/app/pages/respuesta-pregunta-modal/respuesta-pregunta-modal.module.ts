@@ -15,6 +15,7 @@ import { RespuestaPreguntaModalPage } from './respuesta-pregunta-modal.page';
     IonicModule,
     RespuestaPreguntaModalPageRoutingModule
   ],
-  declarations: [RespuestaPreguntaModalPage]
+  declarations: [RespuestaPreguntaModalPage],
+  exports: [RespuestaPreguntaModalPage]
 })
 export class RespuestaPreguntaModalPageModule {}
