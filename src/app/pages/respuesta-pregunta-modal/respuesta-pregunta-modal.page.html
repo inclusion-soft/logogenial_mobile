@@ -5,13 +5,34 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-text color="tertiary">
-    <h1  class="ion-text-center" >{{pregunta.respuesta.frase}}</h1>
+  
+  <img  class="height-leccion-image" src="{{ getUrl() }}/getById/{{pregunta.respuesta.archivoId}}"  alt="{{ pregunta.descripcion }}"  >
+  
+  <ion-item>
+    <ion-icon name="checkmark-circle" slot="end"  color="primary" iconMode="ios"></ion-icon>
+    <ion-label><h2 class="ion-text-center">{{pregunta.respuesta.frase}}</h2></ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-icon *ngIf="esRespuestaCorrecta" name="checkmark-circle" slot="end" iconMode="ios" color="success"></ion-icon>
+    <ion-icon *ngIf="!esRespuestaCorrecta" name="close-circle" slot="end"  iconMode="ios" color="danger"></ion-icon>
+    <ion-label *ngIf="esRespuestaCorrecta" color="success" ><h2 class="ion-text-center">{{respuesta.opcion.nombre}}</h2></ion-label>
+    <ion-label *ngIf="!esRespuestaCorrecta" color="danger" ><h2 class="ion-text-center">{{respuesta.opcion.nombre}}</h2></ion-label>
+  </ion-item>
+
+ 
+
+  <ion-text *ngIf="esRespuestaCorrecta" color="tertiary">    
+    <h1 class="ion-text-center">Excelente</h1>  
   </ion-text>
-  <img  class="height-leccion-image" src="{{ leccionesService.getUrlBase() }}/getById/{{pregunta.respuesta.archivoId}}"  alt="{{ pregunta.descripcion }}"  >
-  <ion-text color="tertiary">    
-    <h1 class="ion-text-center"> {{ respuesta.opcion.nombre }}</h1>  
+
+  <ion-text *ngIf="!esRespuestaCorrecta" color="danger">    
+    <h1 class="ion-text-center">Sigue practicando</h1>  
   </ion-text>
+
+  <img class="height-sensation-image" *ngIf="esRespuestaCorrecta" src="../../../assets/recursos/sensations/up_ok3.jpg">
+  <img class="height-sensation-image" *ngIf="!esRespuestaCorrecta" src="../../../assets/recursos/sensations/fall_down3.jpg">
+
   <ion-button (click)="salirSinArgumentos()" expand="block">
     Continuar
   </ion-button>

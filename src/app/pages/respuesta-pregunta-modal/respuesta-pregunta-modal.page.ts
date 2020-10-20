@@ -15,12 +15,32 @@ export class RespuestaPreguntaModalPage implements OnInit {
   @Input() leccionId: any;
   @Input() pregunta: any;
   @Input() respuesta: any;
+  esRespuestaCorrecta = false;
 
   ngOnInit() {
+    this.validarSiRespuestaEsCorrecta();
+  }
+
+  validarSiRespuestaEsCorrecta() {
+    let preguntaLimpia = this.pregunta.respuesta.frase.toUpperCase();
+    preguntaLimpia = preguntaLimpia.replace(/\s/g, '');
+
+    let respuestaLimpia = this.respuesta.opcion.nombre.toUpperCase();
+    respuestaLimpia = respuestaLimpia.replace(/\s/g, '');
+
+    if (preguntaLimpia === respuestaLimpia) {
+      this.esRespuestaCorrecta = true;
+    } else {
+      this.esRespuestaCorrecta = false;
+    }
   }
 
   salirSinArgumentos() {
     this.modalCtrl.dismiss();
+  }
+
+  getUrl() {
+    return this.leccionService.getUrlBase();
   }
 
 }
