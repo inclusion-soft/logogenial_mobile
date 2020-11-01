@@ -19,6 +19,7 @@ export class LeccionEjecucionPage implements OnInit {
   respuestaSeleccionada: any;
   respuestas: Observable<any>;
   leccionId = null;
+  puntosPorLeccion = 0;
 
   mostrarRespuesta = false;
 
@@ -35,6 +36,7 @@ export class LeccionEjecucionPage implements OnInit {
   this.leccionesService.findAllPreguntasByLeccionId(this.leccionId).subscribe( (preguntas: any) => {
     this.preguntaActual = preguntas[0];
     this.preguntasPendientes = preguntas;
+    this.puntosPorLeccion = Math.trunc(preguntas[0].leccion.puntos / preguntas.length);
     this.cargarRespuestas(preguntas[0].id);
   });
  }
@@ -96,7 +98,8 @@ export class LeccionEjecucionPage implements OnInit {
     componentProps: {
       leccionId: this.leccionId,
       pregunta: this.preguntaActual,
-      respuesta: this.respuestaSeleccionada
+      respuesta: this.respuestaSeleccionada,
+      puntosPorLeccion:  this.puntosPorLeccion
     }
   });
 
