@@ -28,13 +28,7 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
   @Input() respuesta: any;
   @Input() puntosPorLeccion: any;
 
-  //@ViewChild('textSiguiePracticando',{static: true}) textSiguiePracticando: ElementRef;
-  //@ViewChild("textSiguiePracticando", { read: Text, static: true }) textSiguiePracticando: Text
-  @ViewChild("textSiguiePracticando", { read: ElementRef, static: true }) textSiguiePracticando: ElementRef
-  //@ViewChild("textSiguiePracticando", { read: ElementRef, static: true }) textSiguiePracticando;
-
   @ViewChild("button", { read: ElementRef, static: true }) button: ElementRef
-  
   esRespuestaCorrecta = false;
   avancePregunta: AvancePreguntaModel = new AvancePreguntaModel();
   ngOnInit() {
@@ -43,7 +37,6 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    
   }
 
   public animateButton() {
@@ -53,19 +46,6 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
       .duration(1000)
       .iterations(Infinity)
       .fromTo("--background", "green", "blue")
-
-    animation.play();
-  }
-
-  public animateButtonText() {
-    //let elem = this.textSiguiePracticando._searchbarInput.nativeElement;
-    const animation = this.animationCtrl
-      .create()
-      .addElement(this.textSiguiePracticando.nativeElement)
-      .duration(1000)
-      .iterations(Infinity)
-      //.fromTo("--color", "green", "blue")
-      .fromTo("--color", "green", "blue")
     animation.play();
   }
 
@@ -103,9 +83,7 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
   }
 
   salirSinArgumentos() {
-    //this.modalCtrl.dismiss();
-    //this.animateButton();
-    this.animateButtonText();
+    this.modalCtrl.dismiss();
   }
 
   getUrl() {

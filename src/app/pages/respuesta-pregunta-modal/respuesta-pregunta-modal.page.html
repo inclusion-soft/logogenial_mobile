@@ -19,28 +19,11 @@
     <ion-label *ngIf="esRespuestaCorrecta" color="success" ><h2 class="ion-text-center">{{respuesta.opcion.nombre}}</h2></ion-label>
     <ion-label *ngIf="!esRespuestaCorrecta" color="danger" ><h2 class="ion-text-center">{{respuesta.opcion.nombre}}</h2></ion-label>
   </ion-item>
-
- 
-
-  <ion-text *ngIf="esRespuestaCorrecta" color="tertiary">    
-    <h1 class="ion-text-center">Excelente</h1>  
-  </ion-text>
-
-  <ion-text *ngIf="!esRespuestaCorrecta" color="danger">    
-    <!-- <h1 class="ion-text-center">Sigue practicando</h1>   -->
-    xxxx
-  </ion-text>
   
   <!-- ion-item: ok -->
-  <ion-item #textSiguiePracticando >sigue prac222</ion-item>
-
-  <ion-button #button>Lovely Button</ion-button>
-
-  <div class="text" >8888888</div>
-
-  <img class="height-sensation-image" *ngIf="esRespuestaCorrecta" src="../../../assets/recursos/sensations/up_ok3.jpg">
-  <img class="height-sensation-image" *ngIf="!esRespuestaCorrecta" src="../../../assets/recursos/sensations/fall_down3.jpg">
-
+  <img  *ngIf="esRespuestaCorrecta" class="height-sensation-image" src="../../../assets/recursos/gifs/giphy-ok.gif" >
+  <img  *ngIf="!esRespuestaCorrecta" class="height-sensation-image" src="../../../assets/recursos/gifs/giphy-try-again.gif" >
+  
   <ion-button (click)="salirSinArgumentos()" expand="block">
     Continuar
   </ion-button>
