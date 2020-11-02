@@ -27,6 +27,7 @@
     "@ionic/angular": "^5.4.0",
     "@ionic/storage": "^2.2.0",
     "core-js": "^2.5.4",
+    "ng-circle-progress": "^1.6.0",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.6.3",
     "tslib": "^1.14.1",

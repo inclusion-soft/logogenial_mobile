@@ -15,6 +15,7 @@ import { AuthInterceptor } from './seguridad/auth-interceptor';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { MensajeRespuestaModalPageModule } from './mensaje-respuesta-modal/mensaje-respuesta-modal.module';
 import { RespuestaPreguntaModalPageModule } from './pages/respuesta-pregunta-modal/respuesta-pregunta-modal.module';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { RespuestaPreguntaModalPageModule } from './pages/respuesta-pregunta-mod
     MensajeRespuestaModalPageModule,
     RespuestaPreguntaModalPageModule,
     IonicModule.forRoot(),
+    NgCircleProgressModule.forRoot(),
     IonicStorageModule.forRoot(
       {
         name: 'logogenius_db',

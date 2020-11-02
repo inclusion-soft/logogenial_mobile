@@ -8,6 +8,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { TipoAvance } from 'src/app/models/tipo-avance.enum';
 import { Resultado } from 'src/app/models/resultado.enum';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CircleProgressComponent } from 'ng-circle-progress';
 
 
 @Component({
@@ -27,10 +28,25 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
   @Input() pregunta: any;
   @Input() respuesta: any;
   @Input() puntosPorLeccion: any;
-
-  @ViewChild("button", { read: ElementRef, static: true }) button: ElementRef
+  @Input() porcentaje: any;
+  @ViewChild('circleProgress', {static: true}) circleProgress: CircleProgressComponent;
+  //@ViewChild("button", { read: ElementRef, static: true }) button: ElementRef
   esRespuestaCorrecta = false;
   avancePregunta: AvancePreguntaModel = new AvancePreguntaModel();
+
+  optionsA = {
+    percent: 85,
+    radius: 60,
+    showBackground: false,
+    outerStrokeWidth: 10,
+    innerStrokeWidth: 5,
+    subtitleFormat: false,  // clear subtitleFormat coming from other options, because Angular does not assign if variable is undefined. 
+    startFromZero: false,
+    imageHeight: 50,
+    animationDuration: 1000,
+    showSubtitle: false
+  };
+
   ngOnInit() {
     this.validarSiRespuestaEsCorrecta();
     this.registrarAvancePregunta();
@@ -39,25 +55,16 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
   }
 
-  public animateButton() {
-    const animation = this.animationCtrl
-      .create()
-      .addElement(this.button.nativeElement)
-      .duration(1000)
-      .iterations(Infinity)
-      .fromTo("--background", "green", "blue")
-    animation.play();
-  }
-
   validarSiRespuestaEsCorrecta() {
-    let preguntaLimpia = this.pregunta.respuesta.frase.toUpperCase();
+    let preguntaLimpia = this.pregunta.fraseRespuesta.toUpperCase();
     preguntaLimpia = preguntaLimpia.replace(/\s/g, '');
 
-    let respuestaLimpia = this.respuesta.opcion.nombre.toUpperCase();
+    let respuestaLimpia = this.respuesta.fraseRespuesta.toUpperCase();
     respuestaLimpia = respuestaLimpia.replace(/\s/g, '');
 
     if (preguntaLimpia === respuestaLimpia) {
       this.esRespuestaCorrecta = true;
+      this.optionsA.percent = (this.porcentaje) * 100;
     } else {
       this.esRespuestaCorrecta = false;
     }
@@ -83,7 +90,9 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
   }
 
   salirSinArgumentos() {
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss({
+      esRespuestaCorrecta: this.esRespuestaCorrecta
+    });
   }
 
   getUrl() {
