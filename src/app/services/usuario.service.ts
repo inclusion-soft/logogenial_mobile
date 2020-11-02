@@ -70,6 +70,10 @@ export class UsuarioService {
      await this.storage.set('token', token);
    }
 
+   async guardarLlaveValor( llave: string, valor: string ) {
+    await this.storage.set(llave, valor);
+  }
+
    getToken(): string {
     this.cargarToken();
     return this.token;
@@ -151,6 +155,19 @@ export class UsuarioService {
       this.storage.get('token').then((token) => {
             if (token !== null) {
               resolve(token);
+            }
+            resolve(null);
+          }
+        );
+    });
+    return promise;
+  }
+
+  async getLlave(llave) {
+    const promise = new Promise((resolve) => {
+      this.storage.get(llave).then((valor) => {
+            if (valor !== null) {
+              resolve(valor);
             }
             resolve(null);
           }

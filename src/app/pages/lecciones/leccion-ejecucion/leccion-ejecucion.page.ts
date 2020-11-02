@@ -3,9 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LeccionesService } from 'src/app/services/lecciones.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { RespuestaPreguntaModalPage } from '../../respuesta-pregunta-modal/respuesta-pregunta-modal.page';
 import { PreguntaModel } from 'src/app/models/pregunta-model';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-leccion-ejecucion',
@@ -29,7 +30,9 @@ export class LeccionEjecucionPage implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private leccionesService: LeccionesService,
-              private modalCtrl: ModalController ) { }
+              private modalCtrl: ModalController,
+              private navCtrl: NavController,
+              private usuarioService: UsuarioService ) { }
 
  ngOnInit() {
    this.leccionId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -86,8 +89,13 @@ export class LeccionEjecucionPage implements OnInit {
   return array;
 }
 
- volverSeleccionarLeccion() {
-
+ async volverSeleccionarLeccion() {
+  const ultimoAvance = {
+    formulario: 'leccion',
+    valor: 0
+  };
+  const statusSave = await this.usuarioService.guardarLlaveValor('ultimoAvance', JSON.stringify(ultimoAvance));
+  this.navCtrl.navigateRoot( '/lecciones-select', { animated: true } );
  }
 
  onSeleccionarRespuesta(itemRespuesta) {
@@ -114,10 +122,15 @@ export class LeccionEjecucionPage implements OnInit {
   if (data.esRespuestaCorrecta) {
     this.porcentajeAcumulado = this.porcentajeAcumulado + this.porcentaje;
     this.posicionPreguntaActual++;
-    if(this.posicionPreguntaActual === (this.preguntas.length )){
-      alert("fin");
-    }else{
-      this.preguntaActual = this.preguntas[this.posicionPreguntaActual]
+    if (this.posicionPreguntaActual === (this.preguntas.length )) {
+      const ultimoAvance = {
+        formulario: 'leccion',
+        valor: this.leccionId
+      };
+      const statusSave = await this.usuarioService.guardarLlaveValor('ultimoAvance', JSON.stringify(ultimoAvance));
+      this.navCtrl.navigateRoot( '/lecciones-select', { animated: true } );
+    } else {
+      this.preguntaActual = this.preguntas[this.posicionPreguntaActual];
       this.cargarRespuestas(this.preguntas[this.posicionPreguntaActual].id);
     }
   }

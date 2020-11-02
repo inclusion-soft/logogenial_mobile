@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LeccionesService } from 'src/app/services/lecciones.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { LeccionModel } from 'src/app/models/leccion-model';
-import { BasicModel } from 'src/app/models/basic-model';
 import { Observable } from 'rxjs';
 import { UsuarioModel } from 'src/app/models/usuario-model';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-lecciones-select',
@@ -18,19 +17,42 @@ export class LeccionesSelectPage implements OnInit {
   niveles: Observable<any>;
   temas: Observable<any>;
   usuario: UsuarioModel = new UsuarioModel();
-  formSelected = 'grupos';
+  formSelected = '';
+  grupoSeleccionado = 0;
+  nivelSeleccionado = 0;
+  temaSeleccionado = 0;
   constructor(private leccionesService: LeccionesService,
               private usuarioService: UsuarioService,
+              private navCtrl: NavController,
               private router: Router) { }
 
   ngOnInit() {
-    this.cargarGrupos();
+    return Observable.fromPromise(this.handleCargarSeccionPertinente());
+  }
+
+  private async handleCargarSeccionPertinente()  {
+    const informacionUsuario = await this.usuarioService.getInformacionPromise();
+    this.usuario = informacionUsuario as any;
+    if (this.usuario === null) {
+      //this.router.navigate['/login'];
+      this.navCtrl.navigateRoot( '/login', { animated: true } );
+      return;
+    }
+    const ultimoAvance = await this.usuarioService.getLlave('ultimoAvance') as any;
+    if (ultimoAvance !== null && ultimoAvance !== '')  {
+      const ultimoAvanceJson = JSON.parse(ultimoAvance);
+      if (ultimoAvanceJson.formulario === 'leccion') {
+        const tema = await this.usuarioService.getLlave('temas');
+        this.setSeleccionarFormulario('lecciones');
+        this.cargarLecciones(tema);
+      }
+    } else {
+      this.setSeleccionarFormulario('grupos');
+      this.cargarGrupos();
+    }
   }
 
   async cargarGrupos() {
-    const informacionUsuario = await this.usuarioService.getInformacionPromise();
-    const info = informacionUsuario as any;
-    this.usuario = info;
     this.leccionesService.findAllGroupsByEstudianteId(this.usuario.id).subscribe( grupos => {
       this.grupos = grupos;
     });
@@ -41,9 +63,10 @@ export class LeccionesSelectPage implements OnInit {
   }
 
   cargarNiveles(grupoId) {
+    this.grupoSeleccionado = grupoId;
     this.leccionesService.findAllNivelesByGrupoId(grupoId).subscribe( niveles => {
       this.niveles = niveles;
-      this.formSelected = 'niveles';
+      this.setSeleccionarFormulario('niveles');
     });
   }
 
@@ -53,33 +76,54 @@ export class LeccionesSelectPage implements OnInit {
 
   // tslint:disable-next-line: adjacent-overload-signatures
   cargarTemas(grupoNivelId) {
+    this.nivelSeleccionado = grupoNivelId;
     this.leccionesService.findAllTemasByGrupoNivelId(grupoNivelId).subscribe( temas => {
       this.temas = temas;
-      this.formSelected = 'temas';
+      this.setSeleccionarFormulario('temas');
     });
   }
 
   volverGrupos() {
-    this.formSelected = 'grupos';
+    this.setSeleccionarFormulario('grupos');
   }
 
   volverNiveles() {
-    this.formSelected = 'niveles';
+    this.setSeleccionarFormulario('niveles');
   }
 
   volverTemas() {
-    this.formSelected = 'temas';
+    this.setSeleccionarFormulario('temas');
   }
 
   onSeleccionarTema(grupoNivelTemaId) {
     this.cargarLecciones(grupoNivelTemaId.id);
   }
 
+  setSeleccionarFormulario(nombreForm: string) {
+    this.formSelected = nombreForm;
+    let valor = this.usuario.id;
+    switch (nombreForm) {
+      case 'temas':
+        valor = this.temaSeleccionado;
+        break;
+      case 'niveles':
+        valor = this.nivelSeleccionado;
+        break;
+      case 'grupos':
+        valor = this. grupoSeleccionado;
+        break;
+    }
+    if (valor > 0) {
+      this.usuarioService.guardarLlaveValor(nombreForm, valor + '');
+    }
+  }
+
   // tslint:disable-next-line: adjacent-overload-signatures
   cargarLecciones(grupoNivelTemaId) {
+    this.temaSeleccionado = grupoNivelTemaId;
     this.leccionesService.findAllLeccionesByGrupoNivelTemaId(grupoNivelTemaId).subscribe( lecciones => {
       this.lecciones = lecciones;
-      this.formSelected = 'lecciones';
+      this.setSeleccionarFormulario('lecciones');
     });
   }
 
