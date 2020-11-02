@@ -6,5 +6,7 @@
 </ion-toolbar>
 
 <ion-content>
-
+  <div [hidden]="!chart">
+    <canvas id="canvas"></canvas>
+  </div>
 </ion-content>
