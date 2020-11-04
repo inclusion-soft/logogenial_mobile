@@ -6,45 +6,16 @@
 </ion-toolbar>
 
 <ion-content>
-  <ion-card ">
+  <ion-card>
     <ion-item color="primary">
-      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
       <ion-label>Preguntas</ion-label>
     </ion-item>
     
     <ion-card-content>
-      <ion-list>     
-        <ion-item *ngFor="let grupo of grupos">
-          <ion-card>
-            <!-- <img src="../../../assets/recursos/start-ideas.jpg"> -->
-            
-            <ion-card-header>
-              <ion-card-subtitle>Año: {{ grupo.anio }} </ion-card-subtitle>
-              <ion-card-title>Grupo {{ grupo.nombre }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-label>
-                 <h3>Por {{ grupo.usuario.nombre }}</h3>  
-                 <ion-img class="pick-avatar" 
-                    src="../../../assets/avatars/{{ grupo.usuario.avatar  }}"
-                    [ngClass]="'pick-avatar-seleccionado'"></ion-img>
-              </ion-label>
-              
-              <ion-button (click)="onSeleccionarGrupo(grupo)" expand="full">
-                <ion-icon slot="end" name="ios-arrow-dropright-outline"></ion-icon>
-                Seleccionar
-              </ion-button>
-            </ion-card-content>
-          </ion-card>
-
-        </ion-item>
-
-    </ion-list>
+      <div [hidden]="!chart">
+        <canvas id="canvas"></canvas>
+      </div>    
     </ion-card-content>
-
   </ion-card>
-
-  <div [hidden]="!chart">
-    <canvas id="canvas"></canvas>
-  </div>
 </ion-content>
