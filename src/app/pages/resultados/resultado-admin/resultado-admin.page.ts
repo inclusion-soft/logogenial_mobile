@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { UsuarioModel } from 'src/app/models/usuario-model';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-resultado-admin',
@@ -20,6 +21,7 @@ export class ResultadoAdminPage implements OnInit {
   constructor(private resultadoPreguntaService: ResultadosPreguntaService,
               private usuarioService: UsuarioService,
               private routerService: Router,
+              private uiService: UiService,
               private navCtrl: NavController) { }
 
   ngOnInit() {
@@ -40,34 +42,47 @@ export class ResultadoAdminPage implements OnInit {
   cargarUltimosResultadosPorFechaPorEstudiante() {
     const cantidadDias = 5;
     this.resultadoPreguntaService.findLastHitsByFechaAndUsuarioId(this.usuario.id, cantidadDias).subscribe( (datos: any[] ) =>  {
-      const datosPuntaje = [];
-      datos.forEach(element => {
-        datosPuntaje.push()
+      const datosPuntajeAciertos = [];
+      const datosPuntajeDesaciertos = [];
+      const labels = [];
+      let previo = 0;
+      datos.forEach( (element) => {
+        // if (previo > 0 && previo !== element.tipo) {
+
+        // }
+        if (element.tipo === 1) {
+          datosPuntajeAciertos.push(element.cantidad);
+        } else {
+          datosPuntajeDesaciertos.push(element.cantidad);
+        }
+        const fecha = this.uiService.convertStringToDate(element.fecha.substring(0, 10));
+        const fechaFormateada = this.uiService.convertDateToString(fecha, 'DD-MM');
+        if (!labels.includes(fechaFormateada)) {
+          labels.push(fechaFormateada);
+        }
+        previo = element.tipo;
       });
-      
-      datosPuntaje.push(datos[0].cantidad);
-      datosPuntaje.push(datos[1].cantidad);
-      this.totalHits = datosPuntaje[0] + datosPuntaje[1];
+      //this.totalHits = datosPuntajeAciertos[0] + datosPuntajeAciertos[1];
       this.chart = new Chart('daily', {
         type: 'bar',
         data: {
-          labels: ["1900", "1950", "1999", "2050"],
+          labels: labels,
           datasets: [
             {
-              label: "Africa",
-              backgroundColor: "#3e95cd",
-              data: [133,221,783,2478]
+              label: 'Acierto',
+              backgroundColor: '#3e95cd',
+              data: datosPuntajeAciertos
             }, {
-              label: "Europe",
-              backgroundColor: "#8e5ea2",
-              data: [408,547,675,734]
+              label: 'Fallos',
+              backgroundColor: '#8e5ea2',
+              data: datosPuntajeDesaciertos
             }
           ]
         },
         options: {
           title: {
             display: true,
-            text: 'Population growth (millions)'
+            text: 'Actividad últimos días'
           }
         }
       });
