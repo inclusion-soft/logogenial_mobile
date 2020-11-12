@@ -18,4 +18,9 @@ export class ResultadosPreguntaService {
     const endpoint = this.urlService + '/findAllPuntajeByUsuarioEstudianteId/' + usuarioId;
     return this.http.get<ResultadoPreguntaModel[]>(endpoint);
   }
+
+  findLastHitsByFechaAndUsuarioId(usuarioId: number, cantidad: number): Observable<any> {
+    const endpoint = this.urlService + '/findLastHitsByFechaAndUsuarioId/' + usuarioId + '/' + cantidad;
+    return this.http.get<ResultadoPreguntaModel[]>(endpoint);
+  }
 }

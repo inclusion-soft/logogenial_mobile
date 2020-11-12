@@ -5,17 +5,63 @@
   <ion-title>Mis resultados</ion-title>
 </ion-toolbar>
 
+<ion-segment color="primary" value="call" class="ios">
+  <ion-segment-button value="call">
+    <!-- <ion-icon name="call"></ion-icon> -->
+    <ion-icon name="easel"></ion-icon>
+    <ion-text>Preguntas</ion-text>
+  </ion-segment-button>
+  <ion-segment-button value="heart">
+    <ion-icon name="albums"></ion-icon>
+    <ion-text>Lecciones</ion-text>
+  </ion-segment-button>
+  <ion-segment-button value="map">
+    <ion-icon name="flag"></ion-icon>
+    <ion-text>Temas</ion-text>
+  </ion-segment-button>
+</ion-segment>
+
 <ion-content>
   <ion-card>
-    <ion-item color="primary">
+    <ion-item color="light">
       <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
-      <ion-label>Preguntas</ion-label>
+      <ion-label>Hits</ion-label>
     </ion-item>
     
     <ion-card-content>
       <div [hidden]="!chart">
         <canvas id="canvas"></canvas>
-      </div>    
+      </div>  
+      <ion-list>
+        <ion-item>
+          <ion-label>Total</ion-label>
+          <ion-badge color="warning" slot="end">{{totalHits}}</ion-badge>
+        </ion-item>
+      </ion-list> 
+      <!-- <ion-text> </ion-text>  -->
     </ion-card-content>
   </ion-card>
+
+  <ion-card>
+    <ion-item color="light">
+      <ion-icon slot="start" name="calendar"></ion-icon>
+      <ion-label>Diario</ion-label>
+    </ion-item>
+    
+    <ion-card-content>
+      <div [hidden]="!chart">
+        <canvas id="daily"></canvas>
+      </div>  
+      <ion-list>
+        <ion-item>
+          <ion-label>Total</ion-label>
+          <ion-badge color="warning" slot="end">{{totalHits}}</ion-badge>
+        </ion-item>
+      </ion-list> 
+      <!-- <ion-text> </ion-text>  -->
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
+
+

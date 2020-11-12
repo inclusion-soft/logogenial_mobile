@@ -16,6 +16,7 @@ import { UsuarioModel } from 'src/app/models/usuario-model';
 export class ResultadoAdminPage implements OnInit {
   chart: any;
   usuario: UsuarioModel = new UsuarioModel();
+  totalHits = 0;
   constructor(private resultadoPreguntaService: ResultadosPreguntaService,
               private usuarioService: UsuarioService,
               private routerService: Router,
@@ -32,14 +33,55 @@ export class ResultadoAdminPage implements OnInit {
       this.navCtrl.navigateRoot( '/login', { animated: true } );
       return;
     }
-    this.cargarResultadosPorEstudiante();
+    this.cargarHitsResultadosPorEstudiante();
+    this.cargarUltimosResultadosPorFechaPorEstudiante();
   }
 
-  cargarResultadosPorEstudiante() {
+  cargarUltimosResultadosPorFechaPorEstudiante() {
+    const cantidadDias = 5;
+    this.resultadoPreguntaService.findLastHitsByFechaAndUsuarioId(this.usuario.id, cantidadDias).subscribe( (datos: any[] ) =>  {
+      const datosPuntaje = [];
+      datos.forEach(element => {
+        datosPuntaje.push()
+      });
+      
+      datosPuntaje.push(datos[0].cantidad);
+      datosPuntaje.push(datos[1].cantidad);
+      this.totalHits = datosPuntaje[0] + datosPuntaje[1];
+      this.chart = new Chart('daily', {
+        type: 'bar',
+        data: {
+          labels: ["1900", "1950", "1999", "2050"],
+          datasets: [
+            {
+              label: "Africa",
+              backgroundColor: "#3e95cd",
+              data: [133,221,783,2478]
+            }, {
+              label: "Europe",
+              backgroundColor: "#8e5ea2",
+              data: [408,547,675,734]
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Population growth (millions)'
+          }
+        }
+      });
+    }, err => {
+      alert('error cargando datos');
+    });
+  }
+
+  cargarHitsResultadosPorEstudiante() {
     this.resultadoPreguntaService.findAllByUsuarioId(this.usuario.id).subscribe(datos =>  {
       const datosPuntaje = [];
       datosPuntaje.push(datos[0].cantidad);
       datosPuntaje.push(datos[1].cantidad);
+      this.totalHits = datosPuntaje[0] + datosPuntaje[1];
       this.chart = new Chart('canvas', {
         type: 'doughnut',
         data: {
