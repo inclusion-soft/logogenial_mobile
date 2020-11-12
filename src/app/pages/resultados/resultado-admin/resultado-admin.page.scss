@@ -1,5 +1,7 @@
 ion-content{
-    --ion-background-color:#5d98f8;
+    //--ion-background-color:#5d98f8;
+    --ion-background-color: linear-gradient(to bottom,#5d98f8, rgb(149, 180, 238) 100% );
+    //--ion-background-color: linear-gradient(to top, #5d98f8, #71a3f8, #84aef8, #96b9f8, #a7c4f7, #a7c4f7, #a7c4f7, #a7c4f7, #96b9f8, #84aef8, #71a3f8, #5d98f8);
 }
 
 ion-card{

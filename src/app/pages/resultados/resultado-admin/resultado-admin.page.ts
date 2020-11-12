@@ -46,15 +46,28 @@ export class ResultadoAdminPage implements OnInit {
       const datosPuntajeDesaciertos = [];
       const labels = [];
       let previo = 0;
+      let banderaSinResultado = null;
       datos.forEach( (element) => {
-        // if (previo > 0 && previo !== element.tipo) {
+        if (previo > 0 && previo === element.tipo) {
+          banderaSinResultado = true;
+          if (previo === 1) {
+            datosPuntajeDesaciertos.push(0);
+          }
+        }
 
-        // }
         if (element.tipo === 1) {
           datosPuntajeAciertos.push(element.cantidad);
         } else {
           datosPuntajeDesaciertos.push(element.cantidad);
         }
+
+        if (banderaSinResultado === true) {
+          if (previo === 0) {
+            datosPuntajeAciertos.push(0);
+          }
+        }
+        banderaSinResultado = null;
+
         const fecha = this.uiService.convertStringToDate(element.fecha.substring(0, 10));
         const fechaFormateada = this.uiService.convertDateToString(fecha, 'DD-MM');
         if (!labels.includes(fechaFormateada)) {
@@ -62,7 +75,6 @@ export class ResultadoAdminPage implements OnInit {
         }
         previo = element.tipo;
       });
-      //this.totalHits = datosPuntajeAciertos[0] + datosPuntajeAciertos[1];
       this.chart = new Chart('daily', {
         type: 'bar',
         data: {
@@ -70,7 +82,7 @@ export class ResultadoAdminPage implements OnInit {
           datasets: [
             {
               label: 'Acierto',
-              backgroundColor: '#3e95cd',
+              backgroundColor: 'rgba(45, 211, 111, 1)',
               data: datosPuntajeAciertos
             }, {
               label: 'Fallos',
@@ -104,7 +116,7 @@ export class ResultadoAdminPage implements OnInit {
           datasets: [
             {
               data: datosPuntaje,
-              backgroundColor: ['rgba(45, 211, 111, 1)', 'rgba(235, 68, 90, 0.5)'],
+              backgroundColor: ['rgba(45, 211, 111, 1)', '#8e5ea2'],
               fill: false
             },
           ]
