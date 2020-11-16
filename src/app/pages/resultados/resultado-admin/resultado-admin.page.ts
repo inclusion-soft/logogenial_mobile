@@ -40,7 +40,7 @@ export class ResultadoAdminPage implements OnInit {
   }
 
   cargarUltimosResultadosPorFechaPorEstudiante() {
-    const cantidadDias = 5;
+    const cantidadDias = 4;
     this.resultadoPreguntaService.findLastHitsByFechaAndUsuarioId(this.usuario.id, cantidadDias).subscribe( (datos: any[] ) =>  {
       const datosPuntajeAciertos = [];
       const datosPuntajeDesaciertos = [];
