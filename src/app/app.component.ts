@@ -74,4 +74,23 @@ export class AppComponent implements OnInit {
   onClicLogOut() {
     this.usuarioService.logout();
   }
+
+  getData(campo){
+    switch(campo) {
+      case 'avatar':
+        if(this.usuario === null ) {
+          return 'av-5.png';
+        } else {
+          return this.usuario.avatar;
+        }
+        break;
+      case 'email':
+        if(this.usuario === null ) {
+          return 'anonimouse@mail.co';
+        } else {
+          return this.usuario.email;
+        }
+        break;
+    }
+  }
 }

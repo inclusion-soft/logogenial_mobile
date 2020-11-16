@@ -4,12 +4,12 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>
-            <ion-avatar class="align-text-center" [hidden]="usuario === undefined || usuario.avatar === null">
+            <ion-avatar class="align-text-center">
               <!-- <img src="./assets/galeria/iconousuario.jpg" style="text-align: center"> -->
-              <img src="/assets/avatars/{{usuario.avatar}}" style="text-align: center">
+              <img src="/assets/avatars/{{ getData('avatar') }}" style="text-align: center">
             </ion-avatar>
           </ion-list-header>
-          <ion-note [hidden]="usuario === undefined || usuario.email === null">{{ usuario.email}}</ion-note>
+          <ion-note >{{ getData('email')}}</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
