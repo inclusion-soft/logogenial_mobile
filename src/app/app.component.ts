@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { UsuarioService } from './services/usuario.service';
 
 @Component({
   selector: 'app-root',
@@ -30,17 +31,23 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'Mis perfil',
+      title: 'Mi perfil',
       url: '/perfil-edit',
       icon: 'person'
-    }
+    },
+    // {
+    //   title: 'Cerrar sesión',
+    //   url: '/cerrar-sesion',
+    //   icon: 'log-out'
+    // }
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private usuarioService: UsuarioService
   ) {
     this.initializeApp();
   }
@@ -57,5 +64,9 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+  }
+
+  onClicLogOut() {
+    this.usuarioService.logout();
   }
 }

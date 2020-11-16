@@ -11,6 +11,10 @@
               <ion-icon slot="start" [name]="p.icon" [md]="p.icon"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
+            <ion-item *ngIf="i === (appPages.length - 1)" (click)="onClicLogOut()" lines="none" detail="false">
+              <ion-icon slot="start" name="log-out" md="log-out"></ion-icon>
+              <ion-label>Cerrar sesión</ion-label>
+            </ion-item>
           </ion-menu-toggle>
         </ion-list>
 
