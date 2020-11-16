@@ -4,6 +4,8 @@ import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UsuarioService } from './services/usuario.service';
+import { UsuarioModel } from './models/usuario-model';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-root',
@@ -34,14 +36,10 @@ export class AppComponent implements OnInit {
       title: 'Mi perfil',
       url: '/perfil-edit',
       icon: 'person'
-    },
-    // {
-    //   title: 'Cerrar sesión',
-    //   url: '/cerrar-sesion',
-    //   icon: 'log-out'
-    // }
+    }
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  private usuario: UsuarioModel = new UsuarioModel();
 
   constructor(
     private platform: Platform,
@@ -50,6 +48,10 @@ export class AppComponent implements OnInit {
     private usuarioService: UsuarioService
   ) {
     this.initializeApp();
+    this.usuario = new UsuarioModel();
+    this.usuario.nombre = 'anonimo';
+    this.usuario.email = 'nombre@mail.co';
+    this.usuario.avatar = 'av-5.png';
   }
 
   initializeApp() {
@@ -64,6 +66,9 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+    this.usuarioService.userDetail$.subscribe( (usuario: UsuarioModel) => {
+      this.usuario = usuario;
+    }, err => {alert('error'); });
   }
 
   onClicLogOut() {

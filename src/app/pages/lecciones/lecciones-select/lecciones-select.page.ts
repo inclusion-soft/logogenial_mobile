@@ -49,6 +49,7 @@ export class LeccionesSelectPage implements OnInit {
     } else {
       this.setSeleccionarFormulario('grupos');
       this.cargarGrupos();
+      this.usuarioService.setNotificarInformacionUsuario(this.usuario);
     }
   }
 

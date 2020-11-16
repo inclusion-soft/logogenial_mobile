@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { NavController } from '@ionic/angular';
 import { UsuarioModel } from '../models/usuario-model';
 import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { resolve } from 'url';
 const URL = environment.url;
@@ -19,6 +19,8 @@ export class UsuarioService {
   urlService = 'v1/usuario-api';
   private storageSql: SQLiteObject;
   private usuario: UsuarioModel = new UsuarioModel();
+  public userDetail$: BehaviorSubject<UsuarioModel> = new BehaviorSubject<UsuarioModel>(null);
+
    constructor( private http: HttpClient,
                 private storage: Storage,
                 private navCtrl: NavController ) { }
@@ -132,9 +134,12 @@ export class UsuarioService {
 
    getInformacionAsync() {
     this.storage.get('token').then((token) => {
-      debugger;
       this.token = token;
     });
+   }
+
+   setNotificarInformacionUsuario(usuario: UsuarioModel) {
+     this.userDetail$.next(usuario);
    }
 
   async getInformacionPromise() {
