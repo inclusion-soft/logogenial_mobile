@@ -75,22 +75,24 @@ export class AppComponent implements OnInit {
     this.usuarioService.logout();
   }
 
-  getData(campo){
+  getCampo(campo: string) {
+    let dato = '';
     switch(campo) {
       case 'avatar':
         if(this.usuario === null ) {
-          return 'av-5.png';
+          dato = 'av-5.png';
         } else {
-          return this.usuario.avatar;
+          dato = this.usuario.avatar;
         }
         break;
       case 'email':
         if(this.usuario === null ) {
-          return 'anonimouse@mail.co';
+          dato = 'anonimouse@mail.co';
         } else {
-          return this.usuario.email;
+          dato = this.usuario.email;
         }
         break;
     }
+    return dato;
   }
 }

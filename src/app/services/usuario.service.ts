@@ -55,6 +55,11 @@ export class UsuarioService {
     return this.http.post<any>(endPoint, data);
   }
 
+  update(data: UsuarioModel): Observable<any> {
+    const endPoint = URL + this.urlService + '/update';
+    return this.http.put<any>(endPoint, data);
+  }
+
   attemptAuth(credentials: any): Observable<any> {
     const endPoint = URL + 'api/auth/login';
     return this.http.post<any>(endPoint, credentials);

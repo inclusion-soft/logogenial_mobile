@@ -6,10 +6,10 @@
           <ion-list-header>
             <ion-avatar class="align-text-center">
               <!-- <img src="./assets/galeria/iconousuario.jpg" style="text-align: center"> -->
-              <img src="/assets/avatars/{{ getData('avatar') }}" style="text-align: center">
+              <img src="/assets/avatars/{{ getCampo('avatar') }}" style="text-align: center">
             </ion-avatar>
           </ion-list-header>
-          <ion-note >{{ getData('email')}}</ion-note>
+          <ion-note >{{ getCampo('email')}}</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">

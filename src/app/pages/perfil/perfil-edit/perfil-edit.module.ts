@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { PerfilEditPageRoutingModule } from './perfil-edit-routing.module';
 
 import { PerfilEditPage } from './perfil-edit.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PerfilEditPageRoutingModule
+    PerfilEditPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [PerfilEditPage]
 })
