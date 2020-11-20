@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LeccionesService } from 'src/app/services/lecciones.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, Platform } from '@ionic/angular';
 import { RespuestaPreguntaModalPage } from '../../respuesta-pregunta-modal/respuesta-pregunta-modal.page';
 import { PreguntaModel } from 'src/app/models/pregunta-model';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -13,7 +13,9 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   templateUrl: './leccion-ejecucion.page.html',
   styleUrls: ['./leccion-ejecucion.page.scss'],
 })
-export class LeccionEjecucionPage implements OnInit {
+export class LeccionEjecucionPage implements OnInit
+//, AfterViewInit 
+{
   cantidadPreguntas: number = 0;
   preguntas: PreguntaModel[] = [];
   preguntasPendientes: Observable<any>;
@@ -28,20 +30,35 @@ export class LeccionEjecucionPage implements OnInit {
 
   mostrarRespuesta = false;
 
+  @ViewChild('imageCanvas', { static: false }) canvas: any;
+  canvasElement: any;
+
   constructor(private activatedRoute: ActivatedRoute,
               private leccionesService: LeccionesService,
               private modalCtrl: ModalController,
               private navCtrl: NavController,
-              private usuarioService: UsuarioService ) { }
+              private usuarioService: UsuarioService,
+              private plt: Platform 
+              ) { }
 
  ngOnInit() {
    this.leccionId = this.activatedRoute.snapshot.paramMap.get('id');
    this.cargarPreguntas();
  }
 
+ ngAfterViewInit() {
+  // this.canvasElement = this.canvas.nativeElement;
+  // this.canvasElement.width = this.plt.width() + '';
+  //  this.canvasElement.height = 200;
+ }
+
  cargarPreguntas() {
   this.leccionesService.findAllPreguntasByLeccionId(this.leccionId).subscribe( (preguntas: any) => {
     this.preguntaActual = preguntas[0];
+    if (this.preguntaActual.tipopregunta === 2 ){
+      setTimeout( this.cargarPreguntaTipo2,2000, this);
+      //this.cargarPreguntaTipo2();
+    }
     this.preguntasPendientes = preguntas;
     this.preguntas = preguntas;
     this.porcentaje = 1 / preguntas.length;
@@ -133,7 +150,23 @@ export class LeccionEjecucionPage implements OnInit {
       this.preguntaActual = this.preguntas[this.posicionPreguntaActual];
       this.cargarRespuestas(this.preguntas[this.posicionPreguntaActual].id);
     }
+    if (this.preguntaActual.tipoPregunta === 2 ){
+      //this.cargarPreguntaTipo2();
+    }
   }
+ }
+
+ cargarPreguntaTipo2(_this) {
+  _this.canvasElement = _this.canvas.nativeElement;
+  _this.canvasElement.width = 100; //this.plt.width() + '';
+  _this.canvasElement.height = 200;
+
+  let ctx = _this.canvasElement.getContext('2d');
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(300, 150);
+  ctx.lineWidth = 5;
+  ctx.stroke();
  }
 
 }
