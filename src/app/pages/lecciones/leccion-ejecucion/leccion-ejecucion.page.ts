@@ -21,6 +21,8 @@ export class LeccionEjecucionPage implements OnInit
   preguntasPendientes: Observable<any>;
   preguntaActual: any;
   respuestaSeleccionada: any;
+  respuestaSeleccionadaTipo2Imagen: any;
+  respuestaSeleccionadaTipo2Texto: any;
   respuestas: Observable<any>;
   leccionId = null;
   puntosPorLeccion = 0;
@@ -29,6 +31,7 @@ export class LeccionEjecucionPage implements OnInit
   posicionPreguntaActual = 0;
 
   mostrarRespuesta = false;
+  respuestaCompletada = false;
 
   @ViewChild('imageCanvas', { static: false }) canvas: any;
   canvasElement: any;
@@ -156,6 +159,15 @@ export class LeccionEjecucionPage implements OnInit
   }
  }
 
+
+ onSeleccionarRespuestaTipo2SeccionImagenes(itemRespuesta) {
+  this.respuestaSeleccionadaTipo2Imagen = itemRespuesta;
+ }
+
+ onSeleccionarRespuestaTipo2SeccionTexto(itemRespuesta) {
+  this.respuestaSeleccionadaTipo2Texto = itemRespuesta;
+ }
+
  cargarPreguntaTipo2(_this) {
   _this.canvasElement = _this.canvas.nativeElement;
   _this.canvasElement.width = 100; //this.plt.width() + '';
@@ -163,7 +175,8 @@ export class LeccionEjecucionPage implements OnInit
 
   let ctx = _this.canvasElement.getContext('2d');
   ctx.beginPath();
-  ctx.moveTo(0, 0);
+  ctx.moveTo(0, 30);
+  ctx.strokeStyle = '#cf3c4f';
   ctx.lineTo(300, 150);
   ctx.lineWidth = 5;
   ctx.stroke();

@@ -43,9 +43,59 @@
         </ion-list>
       </div>
       
-      <canvas #imageCanvas>
-        canvas
-      </canvas>
+      respuestaIzq: {{respuestaSeleccionadaTipo2Imagen.id}}
+
+      <ion-grid *ngIf="preguntaActual.tipopregunta === 2">
+        <ion-row>
+          
+          <ion-col>
+            <!-- Lista de imagenes -->
+              <ion-list>     
+                <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionImagenes(respuesta)" 
+                [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Imagen?.id? 'warning': ''">
+                  <ion-label>
+                    <!-- <h3> {{ respuesta.id }}</h3>     -->
+                    <img class="height-leccion-image-sm" src="{{ leccionesService.getUrlBase() }}/getById/{{respuesta.opcion.archivoId}}"  alt="no encontrado"  >              
+                 </ion-label>
+                </ion-item>
+              </ion-list>
+              <!-- Fin. Lista de imagenes -->
+          </ion-col>
+
+          <ion-col>
+              <canvas #imageCanvas>
+              </canvas>
+          </ion-col>
+
+          <ion-col>
+            <!-- Sección Lista de texto -->
+            <ion-list>     
+              <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionTexto(respuesta)" 
+              [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Texto?.id? 'success': ''">
+                <ion-label>
+                  <h3> {{ respuesta.fraseRespuesta }}</h3>                  
+               </ion-label>
+              </ion-item>
+            </ion-list>
+            <!-- FIN. Sección Lista de texto -->
+          </ion-col>
+
+        </ion-row>
+        <ion-row>
+          <!-- Seccion botones -->
+          <ion-col size="12">
+            <ion-button [disabled]="!respuestaCompletada" (click)="onResponder()" expand="block" color="success">
+              <ion-icon name="checkmark-circle-outline" slot="end"></ion-icon>
+              Responder
+            </ion-button>
+            <ion-button (click)="onMostrarRespuesta()" expand="block" color="tertiary">
+              <ion-icon name="help-circle-outline" slot="end" ></ion-icon>
+              Ayuda
+            </ion-button>
+          </ion-col>
+          <!-- Fin Seccion Botones -->
+        </ion-row>
+      </ion-grid>
 
     </ion-card-content>
   </ion-card>
