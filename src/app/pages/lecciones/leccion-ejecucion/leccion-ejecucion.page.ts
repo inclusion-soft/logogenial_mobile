@@ -7,6 +7,7 @@ import { ModalController, NavController, Platform } from '@ionic/angular';
 import { RespuestaPreguntaModalPage } from '../../respuesta-pregunta-modal/respuesta-pregunta-modal.page';
 import { PreguntaModel } from 'src/app/models/pregunta-model';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { stat } from 'fs';
 
 @Component({
   selector: 'app-leccion-ejecucion',
@@ -36,6 +37,8 @@ export class LeccionEjecucionPage implements OnInit
   @ViewChild('imageCanvas', { static: false }) canvas: any;
   canvasElement: any;
 
+  @ViewChild('listImagenes', {static: false}) listaImagenes: any;
+
   constructor(private activatedRoute: ActivatedRoute,
               private leccionesService: LeccionesService,
               private modalCtrl: ModalController,
@@ -53,6 +56,11 @@ export class LeccionEjecucionPage implements OnInit
   // this.canvasElement = this.canvas.nativeElement;
   // this.canvasElement.width = this.plt.width() + '';
   //  this.canvasElement.height = 200;
+  this.inicializarObjetoDibujo();
+ }
+
+ inicializarObjetoDibujo() {
+   
  }
 
  cargarPreguntas() {
@@ -170,16 +178,28 @@ export class LeccionEjecucionPage implements OnInit
 
  cargarPreguntaTipo2(_this) {
   _this.canvasElement = _this.canvas.nativeElement;
-  _this.canvasElement.width = 100; //this.plt.width() + '';
-  _this.canvasElement.height = 200;
+  _this.canvasElement.height = _this.listaImagenes.el.offsetHeight
 
   let ctx = _this.canvasElement.getContext('2d');
   ctx.beginPath();
   ctx.moveTo(0, 30);
   ctx.strokeStyle = '#cf3c4f';
-  ctx.lineTo(300, 150);
+  ctx.lineTo(200, 120);
   ctx.lineWidth = 5;
   ctx.stroke();
  }
+
+ dibujarLineaRespuesta(posicionex, posiciony, color) {
+
+ }
+
+ getCoordinates(event)
+{
+    // This output's the X coord of the click
+    console.log(event.clientX);
+
+    // This output's the Y coord of the click
+    console.log(event.clientY);
+}
 
 }

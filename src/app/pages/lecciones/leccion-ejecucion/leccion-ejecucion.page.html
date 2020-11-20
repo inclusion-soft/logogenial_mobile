@@ -42,19 +42,17 @@
           </ion-button>
         </ion-list>
       </div>
-      
-      respuestaIzq: {{respuestaSeleccionadaTipo2Imagen.id}}
+    
 
       <ion-grid *ngIf="preguntaActual.tipopregunta === 2">
-        <ion-row>
+        <ion-row (click)="getCoordinates($event)">
           
-          <ion-col>
+          <ion-col size="3">
             <!-- Lista de imagenes -->
-              <ion-list>     
+              <ion-list #listImagenes>     
                 <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionImagenes(respuesta)" 
                 [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Imagen?.id? 'warning': ''">
                   <ion-label>
-                    <!-- <h3> {{ respuesta.id }}</h3>     -->
                     <img class="height-leccion-image-sm" src="{{ leccionesService.getUrlBase() }}/getById/{{respuesta.opcion.archivoId}}"  alt="no encontrado"  >              
                  </ion-label>
                 </ion-item>
@@ -62,12 +60,12 @@
               <!-- Fin. Lista de imagenes -->
           </ion-col>
 
-          <ion-col>
+          <ion-col  size="4">
               <canvas #imageCanvas>
               </canvas>
           </ion-col>
 
-          <ion-col>
+          <ion-col  size="4">
             <!-- Sección Lista de texto -->
             <ion-list>     
               <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionTexto(respuesta)" 
