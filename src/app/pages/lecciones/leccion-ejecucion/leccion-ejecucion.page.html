@@ -47,11 +47,11 @@
       <ion-grid *ngIf="preguntaActual.tipopregunta === 2">
         <ion-row (click)="analizarCoordenadaSeleccionada($event)">
           
-          <ion-col size="6">
+          <ion-col size="5">
             <!-- Lista de imagenes -->
               <ion-list #listImagenes>     
-                <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionImagenes(respuesta)" 
-                [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Imagen?.id? 'warning': ''" >
+                <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionImagenes(respuesta)"  class="texto-respuesta" 
+                [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Imagen?.id? 'medium': ''" >
                     <img class="height-leccion-image-sm" src="{{ leccionesService.getUrlBase() }}/getById/{{respuesta.opcion.archivoId}}"  alt="no encontrado"  >              
                 </ion-item>
               </ion-list>
@@ -63,14 +63,14 @@
               </canvas>
           </ion-col>
 
-          <ion-col  size="5">
+          <ion-col  size="6">
             <!-- Sección Lista de texto -->
             <ion-list>     
-              <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionTexto(respuesta)" 
-              [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Texto?.id? 'success': ''">
-                <ion-label>
-                  <h3> {{ respuesta.fraseRespuesta }}</h3>                  
-               </ion-label>
+              <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionTexto(respuesta)" class="texto-respuesta" 
+              [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Texto?.id? 'warning': ''">
+                
+                  {{ respuesta.fraseRespuesta }}
+               
               </ion-item>
             </ion-list>
             <!-- FIN. Sección Lista de texto -->
