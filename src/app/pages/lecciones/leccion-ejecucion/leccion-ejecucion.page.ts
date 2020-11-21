@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LeccionesService } from 'src/app/services/lecciones.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ModalController, NavController, Platform } from '@ionic/angular';
 import { RespuestaPreguntaModalPage } from '../../respuesta-pregunta-modal/respuesta-pregunta-modal.page';
 import { PreguntaModel } from 'src/app/models/pregunta-model';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { stat } from 'fs';
+import { ProcesoRespuestaTipo2 } from 'src/app/models/proceso-respuesta-tipo2';
+import { PuntoCartesiano } from 'src/app/models/punto-cartesiano';
 
 @Component({
   selector: 'app-leccion-ejecucion',
@@ -15,7 +15,7 @@ import { stat } from 'fs';
   styleUrls: ['./leccion-ejecucion.page.scss'],
 })
 export class LeccionEjecucionPage implements OnInit
-//, AfterViewInit 
+, AfterViewInit 
 {
   cantidadPreguntas: number = 0;
   preguntas: PreguntaModel[] = [];
@@ -33,9 +33,12 @@ export class LeccionEjecucionPage implements OnInit
 
   mostrarRespuesta = false;
   respuestaCompletada = false;
+  procesoRespuestaTipo2 = new ProcesoRespuestaTipo2();
+  coloresAsociacionRespuestaTipo2 = ['#278825', '#9F29AF', '#AFAD29', '#D16B29', '#29D1C0', '#5F29D1', '#D12929', '#ABD129', '#2974D1', '#3129D1']
 
   @ViewChild('imageCanvas', { static: false }) canvas: any;
   canvasElement: any;
+  ctx: any;
 
   @ViewChild('listImagenes', {static: false}) listaImagenes: any;
 
@@ -56,19 +59,23 @@ export class LeccionEjecucionPage implements OnInit
   // this.canvasElement = this.canvas.nativeElement;
   // this.canvasElement.width = this.plt.width() + '';
   //  this.canvasElement.height = 200;
-  this.inicializarObjetoDibujo();
+  setTimeout( this.inicializarObjetoDibujo, 500, this);
  }
 
- inicializarObjetoDibujo() {
-   
+ inicializarObjetoDibujo(_this) {
+  _this.canvasElement = _this.canvas.nativeElement;
+  _this.canvasElement.height = _this.listaImagenes.el.offsetHeight;
+  this.ctx = _this.canvasElement.getContext('2d');
  }
 
  cargarPreguntas() {
   this.leccionesService.findAllPreguntasByLeccionId(this.leccionId).subscribe( (preguntas: any) => {
     this.preguntaActual = preguntas[0];
     if (this.preguntaActual.tipopregunta === 2 ){
-      setTimeout( this.cargarPreguntaTipo2,2000, this);
+      // this.procesoRespuestaTipo2.cantidadPreguntasTotales = this.preguntaActual.
       //this.cargarPreguntaTipo2();
+      this.procesoRespuestaTipo2.limpiar();
+      this.procesoRespuestaTipo2.cantidadPreguntasTotales = this.preguntaActual.respuesta.length;
     }
     this.preguntasPendientes = preguntas;
     this.preguntas = preguntas;
@@ -170,36 +177,39 @@ export class LeccionEjecucionPage implements OnInit
 
  onSeleccionarRespuestaTipo2SeccionImagenes(itemRespuesta) {
   this.respuestaSeleccionadaTipo2Imagen = itemRespuesta;
+  this.procesoRespuestaTipo2.itemImagenSeleccionado = itemRespuesta;
  }
 
  onSeleccionarRespuestaTipo2SeccionTexto(itemRespuesta) {
   this.respuestaSeleccionadaTipo2Texto = itemRespuesta;
+  this.procesoRespuestaTipo2.itemTextoSeleccionado = itemRespuesta;
  }
 
- cargarPreguntaTipo2(_this) {
-  _this.canvasElement = _this.canvas.nativeElement;
-  _this.canvasElement.height = _this.listaImagenes.el.offsetHeight
-
-  let ctx = _this.canvasElement.getContext('2d');
-  ctx.beginPath();
-  ctx.moveTo(0, 30);
-  ctx.strokeStyle = '#cf3c4f';
-  ctx.lineTo(200, 120);
-  ctx.lineWidth = 5;
-  ctx.stroke();
+ dibujarLineaRespuesta(posicionInicial: PuntoCartesiano, posicionFinal: PuntoCartesiano, color: string) {
+  this.ctx = this.canvasElement.getContext('2d');
+  this.ctx.beginPath();
+  this.ctx.moveTo(posicionInicial.x, posicionInicial.y);
+  this.ctx.strokeStyle = color;
+  this.ctx.lineTo(posicionFinal.x, posicionFinal.y);
+  this.ctx.lineWidth = 5;
+  this.ctx.stroke();
  }
 
- dibujarLineaRespuesta(posicionex, posiciony, color) {
-
- }
-
- getCoordinates(event)
-{
-    // This output's the X coord of the click
-    console.log(event.clientX);
-
-    // This output's the Y coord of the click
-    console.log(event.clientY);
+ analizarCoordenadaSeleccionada(event){
+   if(event.clientX < 250) {
+     this.procesoRespuestaTipo2.posicionInicial = { x: event.clientX, y: event.clientX};
+   } else{
+    this.procesoRespuestaTipo2.posicionFinal = { x: event.clientX, y: event.clientY};
+   }
+   console.log( event.clientX +  ', ' + event.clientY);
 }
+
+  onAsociarRespuestaTipo2() {
+    if(this.procesoRespuestaTipo2.posicionInicial !== null && this.procesoRespuestaTipo2.posicionFinal !== null) {
+      const cantidadRespuestaActual = this.procesoRespuestaTipo2.cantidadPreguntasRespondidas;
+      this.dibujarLineaRespuesta(this.procesoRespuestaTipo2.posicionInicial, this.procesoRespuestaTipo2.posicionFinal, this.coloresAsociacionRespuestaTipo2[cantidadRespuestaActual])
+      this.procesoRespuestaTipo2.cantidadPreguntasRespondidas ++;
+    }
+  }
 
 }

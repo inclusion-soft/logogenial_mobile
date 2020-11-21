@@ -45,7 +45,7 @@
     
 
       <ion-grid *ngIf="preguntaActual.tipopregunta === 2">
-        <ion-row (click)="getCoordinates($event)">
+        <ion-row (click)="analizarCoordenadaSeleccionada($event)">
           
           <ion-col size="3">
             <!-- Lista de imagenes -->
@@ -82,13 +82,13 @@
         <ion-row>
           <!-- Seccion botones -->
           <ion-col size="12">
+            <ion-button (click)="onAsociarRespuestaTipo2()" expand="block" color="tertiary">
+              <ion-icon name="help-circle-outline" slot="end" ></ion-icon>
+              Asociar
+            </ion-button>
             <ion-button [disabled]="!respuestaCompletada" (click)="onResponder()" expand="block" color="success">
               <ion-icon name="checkmark-circle-outline" slot="end"></ion-icon>
               Responder
-            </ion-button>
-            <ion-button (click)="onMostrarRespuesta()" expand="block" color="tertiary">
-              <ion-icon name="help-circle-outline" slot="end" ></ion-icon>
-              Ayuda
             </ion-button>
           </ion-col>
           <!-- Fin Seccion Botones -->
