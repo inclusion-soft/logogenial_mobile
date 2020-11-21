@@ -67,7 +67,7 @@ export class LeccionEjecucionPage implements OnInit
   _this.canvasElement.height = _this.listaImagenes.el.offsetHeight;
   this.ctx = _this.canvasElement.getContext('2d');
 
-  this.ctx = this.canvasElement.getContext('2d');
+  //this.ctx = this.canvasElement.getContext('2d');
   // this.ctx.beginPath();
   // this.ctx.moveTo(0, 0);
   // this.ctx.strokeStyle = this.coloresAsociacionRespuestaTipo2[5];
@@ -219,11 +219,17 @@ export class LeccionEjecucionPage implements OnInit
  }
 
  analizarCoordenadaSeleccionada(event){
+   const constanteTraslacion = -160;
+  //  if(event.clientX < 225) {
+  //    this.procesoRespuestaTipo2.posicionInicial = { x: 155, y: event.clientY};
+  //  } else{
+  //   this.procesoRespuestaTipo2.posicionFinal = { x: event.clientX - 155, y: event.clientY - 100};
+  //  }
    if(event.clientX < 225) {
-     this.procesoRespuestaTipo2.posicionInicial = { x: 155, y: event.clientY};
-   } else{
-    this.procesoRespuestaTipo2.posicionFinal = { x: event.clientX - 155, y: event.clientY - 100};
-   }
+    this.procesoRespuestaTipo2.posicionInicial = { x: 0, y: event.clientY + constanteTraslacion};
+  } else{
+   this.procesoRespuestaTipo2.posicionFinal = { x: 70, y: event.clientY + constanteTraslacion};
+  }
    console.log( event.clientX +  ', ' + event.clientY);
 }
 
