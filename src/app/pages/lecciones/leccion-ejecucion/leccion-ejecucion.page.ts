@@ -66,6 +66,29 @@ export class LeccionEjecucionPage implements OnInit
   _this.canvasElement = _this.canvas.nativeElement;
   _this.canvasElement.height = _this.listaImagenes.el.offsetHeight;
   this.ctx = _this.canvasElement.getContext('2d');
+
+  this.ctx = this.canvasElement.getContext('2d');
+  // this.ctx.beginPath();
+  // this.ctx.moveTo(0, 0);
+  // this.ctx.strokeStyle = this.coloresAsociacionRespuestaTipo2[5];
+  // this.ctx.lineTo(100, 0);
+  // this.ctx.lineWidth = 5;
+  // this.ctx.stroke();
+
+  // this.ctx.beginPath();
+  // this.ctx.moveTo(0, 100);
+  // this.ctx.strokeStyle = this.coloresAsociacionRespuestaTipo2[6];
+  // this.ctx.lineTo(100, 100);
+  // this.ctx.lineWidth = 5;
+  // this.ctx.stroke();
+
+  // this.ctx.beginPath();
+  // this.ctx.moveTo(0, 300);
+  // this.ctx.strokeStyle = this.coloresAsociacionRespuestaTipo2[6];
+  // this.ctx.lineTo(100, 100);
+  // this.ctx.lineWidth = 5;
+  // this.ctx.stroke();
+
  }
 
  cargarPreguntas() {
@@ -196,12 +219,16 @@ export class LeccionEjecucionPage implements OnInit
  }
 
  analizarCoordenadaSeleccionada(event){
-   if(event.clientX < 250) {
-     this.procesoRespuestaTipo2.posicionInicial = { x: event.clientX, y: event.clientX};
+   if(event.clientX < 225) {
+     this.procesoRespuestaTipo2.posicionInicial = { x: 155, y: event.clientY};
    } else{
-    this.procesoRespuestaTipo2.posicionFinal = { x: event.clientX, y: event.clientY};
+    this.procesoRespuestaTipo2.posicionFinal = { x: event.clientX - 155, y: event.clientY - 100};
    }
    console.log( event.clientX +  ', ' + event.clientY);
+}
+
+analizarCoordenadaCanvas(event){
+  console.log( ' canvas:           ' + event.clientX +  ', ' + event.clientY);
 }
 
   onAsociarRespuestaTipo2() {

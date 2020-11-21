@@ -45,7 +45,7 @@
     
 
       <ion-grid *ngIf="preguntaActual.tipopregunta === 2">
-        <ion-row (click)="analizarCoordenadaSeleccionada($event)">
+        <ion-row (click)="analizarCoordenadaSeleccionada($event)" style="padding-left: 0px;">
           
           <ion-col size="5">
             <!-- Lista de imagenes -->
@@ -58,12 +58,12 @@
               <!-- Fin. Lista de imagenes -->
           </ion-col>
 
-          <ion-col  size="1">
-              <canvas #imageCanvas>
+          <ion-col  size="2" style="padding-left: 0px;">
+              <canvas #imageCanvas (click)="analizarCoordenadaCanvas($event)" style="background-color: aqua;">
               </canvas>
           </ion-col>
 
-          <ion-col  size="6">
+          <ion-col  size="5">
             <!-- Sección Lista de texto -->
             <ion-list>     
               <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionTexto(respuesta)" class="texto-respuesta" 
