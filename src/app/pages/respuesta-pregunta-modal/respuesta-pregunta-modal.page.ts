@@ -73,6 +73,7 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
     } else{
       if(this.procesoRespuestaTipo2.cantidadRespuestasCorrectas === this.procesoRespuestaTipo2.cantidadPreguntasRespondidas) {
         this.esRespuestaCorrecta = true;
+        this.optionsA.percent = (this.porcentaje) * 100;
       } else{
         this.esRespuestaCorrecta = false;
       }
