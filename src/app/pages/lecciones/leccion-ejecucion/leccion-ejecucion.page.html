@@ -50,7 +50,7 @@
           <ion-col size="5">
             <!-- Lista de imagenes -->
               <ion-list #listImagenes>     
-                <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionImagenes(respuesta)"  class="texto-respuesta" 
+                <ion-item *ngFor="let respuesta of respuestasImagenes" (click)="onSeleccionarRespuestaTipo2SeccionImagenes(respuesta)"  class="texto-respuesta" 
                 [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Imagen?.id? 'medium': ''" >
                     <img class="height-leccion-image-sm" src="{{ leccionesService.getUrlBase() }}/getById/{{respuesta.opcion.archivoId}}"  alt="no encontrado"  >              
                 </ion-item>

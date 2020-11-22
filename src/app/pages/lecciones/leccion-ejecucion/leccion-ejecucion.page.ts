@@ -25,6 +25,7 @@ export class LeccionEjecucionPage implements OnInit
   respuestaSeleccionadaTipo2Imagen: any;
   respuestaSeleccionadaTipo2Texto: any;
   respuestas: Observable<any>;
+  respuestasImagenes: Observable<any>;
   leccionId = null;
   puntosPorLeccion = 0;
   porcentaje = 0;
@@ -60,9 +61,13 @@ export class LeccionEjecucionPage implements OnInit
  }
 
  inicializarObjetoDibujo(_this) {
-  _this.canvasElement = _this.canvas.nativeElement;
-  _this.canvasElement.height = _this.listaImagenes.el.offsetHeight;
-  this.ctx = _this.canvasElement.getContext('2d');
+  //  if(_this.canvas !== undefined) {
+    try {
+      _this.canvasElement = _this.canvas.nativeElement;
+      _this.canvasElement.height = _this.listaImagenes.el.offsetHeight;
+      this.ctx = _this.canvasElement.getContext('2d');
+    } catch (error) {
+   }
  }
 
  cargarPreguntas() {
@@ -83,11 +88,12 @@ export class LeccionEjecucionPage implements OnInit
 
  cargarRespuestas(preguntaId: number) {
   this.leccionesService.findAllRespuestasByPreguntaId(preguntaId).subscribe( (respuestas: any) =>{
-    if(this.preguntaActual.tipopregunta === 2) {
-      this.procesoRespuestaTipo2.cantidadPreguntasTotales = respuestas.length + 1;
-    }
     respuestas = this.agregarRespuestaConPreguntaSeleccionada(respuestas);
     respuestas = this.desordenarRespuestas(respuestas);
+    if(this.preguntaActual.tipopregunta === 2) {
+      this.procesoRespuestaTipo2.cantidadPreguntasTotales = respuestas.length + 1;
+      this.respuestasImagenes = this.desordenarRespuestas(JSON.parse(JSON.stringify(respuestas)));
+    }
     this.respuestas = respuestas;
   });
  }
