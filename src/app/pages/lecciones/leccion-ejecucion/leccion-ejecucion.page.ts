@@ -148,7 +148,9 @@ export class LeccionEjecucionPage implements OnInit
       respuesta: this.respuestaSeleccionada,
       puntosPorLeccion:  this.puntosPorLeccion,
       porcentaje: this.porcentajeAcumulado,
-      procesoRespuestaTipo2: this.procesoRespuestaTipo2
+      procesoRespuestaTipo2: this.procesoRespuestaTipo2,
+      resultadoProcesoRespuestaTipo2:
+        this.procesoRespuestaTipo2.cantidadPreguntasRespondidas === this.procesoRespuestaTipo2.cantidadRespuestasCorrectas ? true : false
     }
   });
   await modal.present();
@@ -202,11 +204,6 @@ export class LeccionEjecucionPage implements OnInit
   } else{
    this.procesoRespuestaTipo2.posicionFinal = { x: 70, y: event.clientY + constanteTraslacion};
   }
-   console.log( event.clientX +  ', ' + event.clientY);
-}
-
-analizarCoordenadaCanvas(event){
-  console.log( ' canvas:           ' + event.clientX +  ', ' + event.clientY);
 }
 
   onAsociarRespuestaTipo2() {
@@ -220,6 +217,7 @@ analizarCoordenadaCanvas(event){
       if( this.procesoRespuestaTipo2.cantidadPreguntasTotales === this.procesoRespuestaTipo2.cantidadPreguntasRespondidas)  {
           this.onResponder();
           this.procesoRespuestaTipo2.limpiar();
+          this.procesoRespuestaTipo2.cantidadPreguntasTotales = ((this.respuestas) as any).length;
         }
     }
   }

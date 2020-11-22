@@ -29,7 +29,8 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
   @Input() respuesta: any;
   @Input() puntosPorLeccion: any;
   @Input() porcentaje: any;
-  @Input() procesoRespuestaTipo2: ProcesoRespuestaTipo2;
+  @Input() procesoRespuestaTipo2: any;
+  @Input() resultadoProcesoRespuestaTipo2: boolean;
   @ViewChild('circleProgress', {static: true}) circleProgress: CircleProgressComponent;
 
   esRespuestaCorrecta = false;
@@ -71,7 +72,7 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
         this.esRespuestaCorrecta = false;
       }
     } else{
-      if(this.procesoRespuestaTipo2.cantidadRespuestasCorrectas === this.procesoRespuestaTipo2.cantidadPreguntasRespondidas) {
+      if(this.resultadoProcesoRespuestaTipo2) {
         this.esRespuestaCorrecta = true;
         this.optionsA.percent = (this.porcentaje) * 100;
       } else{
@@ -90,7 +91,9 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
       this.avancePregunta.tipoAvance = TipoAvance.Leccion;
       this.avancePregunta.puntaje = this.puntosPorLeccion;
     } else {
-      this.avancePregunta.respuesta.id = this.respuesta.id;
+      if(this.pregunta.tipopregunta === 1) {
+        this.avancePregunta.respuesta.id = this.respuesta.id;
+      }
       this.avancePregunta.resultado = Resultado.Incorrecto;
       this.avancePregunta.tipoAvance = TipoAvance.Practica;
     }
