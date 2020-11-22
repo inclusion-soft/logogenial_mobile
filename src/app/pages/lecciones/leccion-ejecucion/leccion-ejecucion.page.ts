@@ -56,9 +56,6 @@ export class LeccionEjecucionPage implements OnInit
  }
 
  ngAfterViewInit() {
-  // this.canvasElement = this.canvas.nativeElement;
-  // this.canvasElement.width = this.plt.width() + '';
-  //  this.canvasElement.height = 200;
   setTimeout( this.inicializarObjetoDibujo, 500, this);
  }
 
@@ -66,37 +63,12 @@ export class LeccionEjecucionPage implements OnInit
   _this.canvasElement = _this.canvas.nativeElement;
   _this.canvasElement.height = _this.listaImagenes.el.offsetHeight;
   this.ctx = _this.canvasElement.getContext('2d');
-
-  //this.ctx = this.canvasElement.getContext('2d');
-  // this.ctx.beginPath();
-  // this.ctx.moveTo(0, 0);
-  // this.ctx.strokeStyle = this.coloresAsociacionRespuestaTipo2[5];
-  // this.ctx.lineTo(100, 0);
-  // this.ctx.lineWidth = 5;
-  // this.ctx.stroke();
-
-  // this.ctx.beginPath();
-  // this.ctx.moveTo(0, 100);
-  // this.ctx.strokeStyle = this.coloresAsociacionRespuestaTipo2[6];
-  // this.ctx.lineTo(100, 100);
-  // this.ctx.lineWidth = 5;
-  // this.ctx.stroke();
-
-  // this.ctx.beginPath();
-  // this.ctx.moveTo(0, 300);
-  // this.ctx.strokeStyle = this.coloresAsociacionRespuestaTipo2[6];
-  // this.ctx.lineTo(100, 100);
-  // this.ctx.lineWidth = 5;
-  // this.ctx.stroke();
-
  }
 
  cargarPreguntas() {
   this.leccionesService.findAllPreguntasByLeccionId(this.leccionId).subscribe( (preguntas: any) => {
     this.preguntaActual = preguntas[0];
     if (this.preguntaActual.tipopregunta === 2 ){
-      // this.procesoRespuestaTipo2.cantidadPreguntasTotales = this.preguntaActual.
-      //this.cargarPreguntaTipo2();
       this.procesoRespuestaTipo2.limpiar();
       this.procesoRespuestaTipo2.cantidadPreguntasTotales = this.preguntaActual.respuesta.length;
     }
@@ -111,6 +83,9 @@ export class LeccionEjecucionPage implements OnInit
 
  cargarRespuestas(preguntaId: number) {
   this.leccionesService.findAllRespuestasByPreguntaId(preguntaId).subscribe( (respuestas: any) =>{
+    if(this.preguntaActual.tipopregunta === 2) {
+      this.procesoRespuestaTipo2.cantidadPreguntasTotales = respuestas.length + 1;
+    }
     respuestas = this.agregarRespuestaConPreguntaSeleccionada(respuestas);
     respuestas = this.desordenarRespuestas(respuestas);
     this.respuestas = respuestas;
@@ -172,7 +147,8 @@ export class LeccionEjecucionPage implements OnInit
       pregunta: this.preguntaActual,
       respuesta: this.respuestaSeleccionada,
       puntosPorLeccion:  this.puntosPorLeccion,
-      porcentaje: this.porcentajeAcumulado
+      porcentaje: this.porcentajeAcumulado,
+      procesoRespuestaTipo2: this.procesoRespuestaTipo2
     }
   });
   await modal.present();
@@ -195,6 +171,7 @@ export class LeccionEjecucionPage implements OnInit
       //this.cargarPreguntaTipo2();
     }
   }
+  setTimeout( this.inicializarObjetoDibujo, 500, this);
  }
 
 
@@ -220,11 +197,6 @@ export class LeccionEjecucionPage implements OnInit
 
  analizarCoordenadaSeleccionada(event){
    const constanteTraslacion = -160;
-  //  if(event.clientX < 225) {
-  //    this.procesoRespuestaTipo2.posicionInicial = { x: 155, y: event.clientY};
-  //  } else{
-  //   this.procesoRespuestaTipo2.posicionFinal = { x: event.clientX - 155, y: event.clientY - 100};
-  //  }
    if(event.clientX < 225) {
     this.procesoRespuestaTipo2.posicionInicial = { x: 0, y: event.clientY + constanteTraslacion};
   } else{
@@ -242,6 +214,13 @@ analizarCoordenadaCanvas(event){
       const cantidadRespuestaActual = this.procesoRespuestaTipo2.cantidadPreguntasRespondidas;
       this.dibujarLineaRespuesta(this.procesoRespuestaTipo2.posicionInicial, this.procesoRespuestaTipo2.posicionFinal, this.coloresAsociacionRespuestaTipo2[cantidadRespuestaActual])
       this.procesoRespuestaTipo2.cantidadPreguntasRespondidas ++;
+      if(this.respuestaSeleccionadaTipo2Imagen.id === this.respuestaSeleccionadaTipo2Texto.id) {
+        this.procesoRespuestaTipo2.cantidadRespuestasCorrectas ++;
+      }
+      if( this.procesoRespuestaTipo2.cantidadPreguntasTotales === this.procesoRespuestaTipo2.cantidadPreguntasRespondidas)  {
+          this.onResponder();
+          this.procesoRespuestaTipo2.limpiar();
+        }
     }
   }
 

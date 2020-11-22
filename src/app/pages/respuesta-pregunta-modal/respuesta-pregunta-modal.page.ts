@@ -9,7 +9,7 @@ import { TipoAvance } from 'src/app/models/tipo-avance.enum';
 import { Resultado } from 'src/app/models/resultado.enum';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CircleProgressComponent } from 'ng-circle-progress';
-
+import { ProcesoRespuestaTipo2 } from 'src/app/models/proceso-respuesta-tipo2';
 
 @Component({
   selector: 'app-respuesta-pregunta-modal',
@@ -29,8 +29,9 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
   @Input() respuesta: any;
   @Input() puntosPorLeccion: any;
   @Input() porcentaje: any;
+  @Input() procesoRespuestaTipo2: ProcesoRespuestaTipo2;
   @ViewChild('circleProgress', {static: true}) circleProgress: CircleProgressComponent;
-  //@ViewChild("button", { read: ElementRef, static: true }) button: ElementRef
+
   esRespuestaCorrecta = false;
   avancePregunta: AvancePreguntaModel = new AvancePreguntaModel();
 
@@ -56,17 +57,25 @@ export class RespuestaPreguntaModalPage implements OnInit, AfterViewInit {
   }
 
   validarSiRespuestaEsCorrecta() {
-    let preguntaLimpia = this.pregunta.fraseRespuesta.toUpperCase();
-    preguntaLimpia = preguntaLimpia.replace(/\s/g, '');
-
-    let respuestaLimpia = this.respuesta.fraseRespuesta.toUpperCase();
-    respuestaLimpia = respuestaLimpia.replace(/\s/g, '');
-
-    if (preguntaLimpia === respuestaLimpia) {
-      this.esRespuestaCorrecta = true;
-      this.optionsA.percent = (this.porcentaje) * 100;
-    } else {
-      this.esRespuestaCorrecta = false;
+    if(this.pregunta.tipopregunta === 1) {
+      let preguntaLimpia = this.pregunta.fraseRespuesta.toUpperCase();
+      preguntaLimpia = preguntaLimpia.replace(/\s/g, '');
+  
+      let respuestaLimpia = this.respuesta.fraseRespuesta.toUpperCase();
+      respuestaLimpia = respuestaLimpia.replace(/\s/g, '');
+  
+      if (preguntaLimpia === respuestaLimpia) {
+        this.esRespuestaCorrecta = true;
+        this.optionsA.percent = (this.porcentaje) * 100;
+      } else {
+        this.esRespuestaCorrecta = false;
+      }
+    } else{
+      if(this.procesoRespuestaTipo2.cantidadRespuestasCorrectas === this.procesoRespuestaTipo2.cantidadPreguntasRespondidas) {
+        this.esRespuestaCorrecta = true;
+      } else{
+        this.esRespuestaCorrecta = false;
+      }
     }
   }
 
