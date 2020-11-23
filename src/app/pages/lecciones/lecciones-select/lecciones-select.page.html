@@ -30,7 +30,8 @@
             </ion-card-header>
             <ion-card-content>
               <ion-label>
-                 <h3>Por {{ grupo.usuario.nombre }}</h3>  
+                 <h3 *ngIf="grupo.usuario.nombre !== grupo.usuario.apellido">Por {{ grupo.usuario.nombre }} {{ grupo.usuario.apellido }}</h3>  
+                 <h3 *ngIf="grupo.usuario.nombre === grupo.usuario.apellido">Por {{ grupo.usuario.nombre }} </h3>  
                  <ion-img class="pick-avatar" 
                     src="../../../assets/avatars/{{ grupo.usuario.avatar  }}"
                     [ngClass]="'pick-avatar-seleccionado'"></ion-img>
