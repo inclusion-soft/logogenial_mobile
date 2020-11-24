@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Lección en ejecución</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-card *ngIf="preguntaActual !== undefined">
+    <ion-item color="primary">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>{{preguntaActual.leccion.leyenda}}</ion-label>
+      <ion-button (click)="volverSeleccionarLeccion()" color="light" >
+        <ion-icon slot="end" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+    <ion-card-content>
+      <ion-card-header>
+        <ion-card-title  *ngIf="mostrarRespuesta === true" class="ion-text-center" >{{preguntaActual.respuesta.frase}}</ion-card-title>
+      </ion-card-header>
+      <div *ngIf="preguntaActual.tipopregunta === 1">
+        <img class="height-leccion-image" src="{{ leccionesService.getUrlBase() }}/getById/{{preguntaActual.respuesta.archivoId}}"  alt="{{ preguntaActual.descripcion }}"  >
+        <ion-list>     
+          <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuesta(respuesta)" 
+          [color]="respuesta?.id ===  respuestaSeleccionada?.id? 'warning': ''">
+            <ion-label>
+              <h3> {{ respuesta.fraseRespuesta }}</h3>                  
+           </ion-label>
+          </ion-item>
+          <br>
+          <ion-button [disabled]="respuestaSeleccionada === undefined" (click)="onResponder()" expand="block" color="success">
+            <ion-icon name="checkmark-circle-outline" slot="end"></ion-icon>
+            Responder
+          </ion-button>
+          <ion-button (click)="onMostrarRespuesta()" expand="block" color="tertiary">
+            <ion-icon name="help-circle-outline" slot="end" ></ion-icon>
+            Ayuda
+          </ion-button>
+        </ion-list>
+      </div>
+    
+
+      <ion-grid *ngIf="preguntaActual.tipopregunta === 2">
+        <ion-row (click)="analizarCoordenadaSeleccionada($event)" style="padding-left: 0px;">
+          
+          <ion-col size="5">
+            <!-- Lista de imagenes -->
+              <ion-list #listImagenes>     
+                <ion-item *ngFor="let respuesta of respuestasImagenes" (click)="onSeleccionarRespuestaTipo2SeccionImagenes(respuesta)"  class="texto-respuesta" 
+                [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Imagen?.id? 'medium': ''" >
+                    <img class="height-leccion-image-sm" src="{{ leccionesService.getUrlBase() }}/getById/{{respuesta.opcion.archivoId}}"  alt="no encontrado"  >              
+                </ion-item>
+              </ion-list>
+              <!-- Fin. Lista de imagenes -->
+          </ion-col>
+
+          <ion-col  size="2" style="padding-left: 0px;">
+              <canvas #imageCanvas>
+              </canvas>
+          </ion-col>
+
+          <ion-col  size="5">
+            <!-- Sección Lista de texto -->
+            <ion-list>     
+              <ion-item *ngFor="let respuesta of respuestas" (click)="onSeleccionarRespuestaTipo2SeccionTexto(respuesta)" class="texto-respuesta" 
+              [color]="respuesta?.id ===  respuestaSeleccionadaTipo2Texto?.id? 'warning': ''">
+                
+                  {{ respuesta.fraseRespuesta }}
+               
+              </ion-item>
+            </ion-list>
+            <!-- FIN. Sección Lista de texto -->
+          </ion-col>
+
+        </ion-row>
+        <ion-row>
+          <!-- Seccion botones -->
+          <ion-col size="12">
+            <ion-button (click)="onAsociarRespuestaTipo2()" expand="block" color="tertiary">
+              <ion-icon name="help-circle-outline" slot="end" ></ion-icon>
+              Asociar
+            </ion-button>
+            <ion-button [disabled]="!respuestaCompletada" (click)="onResponder()" expand="block" color="success">
+              <ion-icon name="checkmark-circle-outline" slot="end"></ion-icon>
+              Responder
+            </ion-button>
+          </ion-col>
+          <!-- Fin Seccion Botones -->
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

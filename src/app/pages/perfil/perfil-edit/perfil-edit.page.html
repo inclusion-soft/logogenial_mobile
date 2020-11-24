@@ -1,0 +1,88 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-title>Mi perfil</ion-title>
+</ion-toolbar>
+
+<ion-content>
+
+  <ion-slide>
+
+      
+    <ion-grid fixed>
+
+          <!-- Avatar Selector -->
+          <app-avatar-selector (avatarSel)="usuario.avatar = $event" [avatarActual]="usuario.avatar"></app-avatar-selector>
+      
+          <form (ngSubmit)="submitRegistro( fRegistro )" #fRegistro="ngForm">
+              <ion-row>
+                  <ion-col>
+                      
+                      <ion-list>
+                          
+                        <ion-item>
+                          <ion-label>Email</ion-label>
+                          <ion-input name="email" 
+                                      type="email"
+                                      [(ngModel)]="usuario.email"
+                                      required></ion-input>
+                          <ion-input name="username" 
+                                      type="hidden"
+                                      [(ngModel)]="usuario.email"
+                                      required></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                          <ion-label>Apellido</ion-label>
+                          <ion-input name="apellido"
+                                      type="text"
+                                      [(ngModel)]="usuario.apellido"
+                                      required></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                          <ion-label>Nombre</ion-label>
+                          <ion-input name="nombre"
+                                      type="text"
+                                      [(ngModel)]="usuario.nombre"
+                                      required></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                          <ion-label>Password</ion-label>
+                          <ion-input name="password"
+                                      type="password"
+                                      [(ngModel)]="usuario.password"
+                                      required></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                          <ion-label>Repetir Password</ion-label>
+                          <ion-input name="repetirPassword"
+                                      type="password"
+                                      [(ngModel)]="usuario.repetirPassword"
+                                      required></ion-input>
+                        </ion-item>
+
+                      </ion-list>
+                  </ion-col>
+              </ion-row>
+              
+              <ion-row>
+              <ion-col>
+                  <ion-button [disabled]="!fRegistro.valid" type="submit"
+                              color="tertiary"
+                              shape="round">
+                      Actualizar usuario
+                  </ion-button>
+              </ion-col>
+          </ion-row>
+          
+          </form>
+      </ion-grid>
+
+
+    </ion-slide>
+
+</ion-content>

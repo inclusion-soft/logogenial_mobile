@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Única respuesta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-item>          
+      <img  aling="center" src="../../assets/recursos/frutas_logo.png">
+      <ion-label>Frutas {{fruta1}}</ion-label>
+    </ion-item>
+    <ion-progress-bar color="primary" value="{{score}}"></ion-progress-bar>
+    <!-- <ion-card-header>
+      <ion-card-subtitle>Destination</ion-card-subtitle>
+      <ion-card-title>Madison, WI</ion-card-title>
+    </ion-card-header> -->
+    <ion-card-content>
+      <p class="centrado">
+        <!-- <img alt="Logotipo de GNU (GNU is Not Unix)" src="../img/gnu-head-sm.jpg" title="Logotipo de GNU (GNU is Not Unix)"> -->
+        <img src="../../assets/recursos/pera.jpg">
+      </p>
+      
+      <ion-item  >
+        <ion-label>Seleccione</ion-label>
+        <ion-select (ionChange)="onOptChange($event)" ok-text="Ok" cancel-text="Cancel">
+          <ion-select-option value="Manzana">Manzana</ion-select-option>
+          <ion-select-option value="Banana">Banana</ion-select-option>
+          <ion-select-option value="Pera">Pera</ion-select-option>
+          <ion-select-option value="Uva">Uva</ion-select-option>          
+        </ion-select>
+      </ion-item>
+      <ion-button (click)="evaluar($event)" slot="end">Evaluar</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,61 @@
+<ion-toolbar mode="md">
+  <ion-buttons slot="start">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+  <ion-title>Mis resultados</ion-title>
+</ion-toolbar>
+
+<ion-segment color="primary" value="call" class="ios">
+  <ion-segment-button value="call">
+    <!-- <ion-icon name="call"></ion-icon> -->
+    <ion-icon name="easel"></ion-icon>
+    <ion-text>Preguntas</ion-text>
+  </ion-segment-button>
+  <ion-segment-button value="heart">
+    <ion-icon name="albums"></ion-icon>
+    <ion-text>Lecciones</ion-text>
+  </ion-segment-button>
+  <ion-segment-button value="map">
+    <ion-icon name="flag"></ion-icon>
+    <ion-text>Temas</ion-text>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-content>
+  <ion-card>
+    <ion-item color="light">
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+      <ion-label>Hits</ion-label>
+    </ion-item>
+    
+    <ion-card-content>
+      <div [hidden]="!chart">
+        <canvas id="canvas"></canvas>
+      </div>  
+      <ion-list>
+        <ion-item>
+          <ion-label>Total</ion-label>
+          <ion-badge color="warning" slot="end">{{totalHits}}</ion-badge>
+        </ion-item>
+      </ion-list> 
+      <!-- <ion-text> </ion-text>  -->
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-item color="light">
+      <ion-icon slot="start" name="calendar"></ion-icon>
+      <ion-label>Diario</ion-label>
+    </ion-item>
+    
+    <ion-card-content style="height: 240px; padding: 0px 0px 0px 0;">
+      <div [hidden]="!chart" style="height: 100%;">
+        <canvas id="daily" style="height: 120%;"></canvas>
+      </div>  
+      <!-- <ion-text> </ion-text>  -->
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+

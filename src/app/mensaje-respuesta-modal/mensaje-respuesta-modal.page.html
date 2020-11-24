@@ -1,0 +1,28 @@
+<ion-content>
+  <ion-grid>  
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <div>
+          <div id="try_again" class="center"></div>
+        </div>
+      </ion-col>
+      
+      <ion-col>
+        <div id ="score_text">
+          {{score | number:0}}
+        </div>
+      </ion-col>
+    </ion-row>
+  
+  </ion-grid>
+  <!-- <img  aling="center" src="../../assets/recursos/animation_varios.gif"> -->
+</ion-content>
+
+<ion-footer>
+  <div>
+    <ion-button (click)="closeModal()">  
+      <ion-icon slot="start" name="arrow-back" color="success"></ion-icon>  
+      volver
+    </ion-button>
+  </div>  
+</ion-footer>

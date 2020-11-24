@@ -1,0 +1,154 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Lecciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text color="dark" >
+    <h5 class="ml-10">Selecciona tu lección</h5>
+  </ion-text>
+  
+  <ion-card *ngIf="formSelected === 'grupos'">
+    <ion-item color="primary">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>Grupos</ion-label>
+    </ion-item>
+    
+    <ion-card-content>
+      <ion-list>     
+        <ion-item *ngFor="let grupo of grupos">
+          <ion-card>
+            <img src="../../../assets/recursos/start-ideas.jpg">
+            
+            <ion-card-header>
+              <ion-card-subtitle>Año: {{ grupo.anio }} </ion-card-subtitle>
+              <ion-card-title>Grupo {{ grupo.nombre }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-label>
+                 <h3 *ngIf="grupo.usuario.nombre !== grupo.usuario.apellido">Por {{ grupo.usuario.nombre }} {{ grupo.usuario.apellido }}</h3>  
+                 <h3 *ngIf="grupo.usuario.nombre === grupo.usuario.apellido">Por {{ grupo.usuario.nombre }} </h3>  
+                 <ion-img class="pick-avatar" 
+                    src="../../../assets/avatars/{{ grupo.usuario.avatar  }}"
+                    [ngClass]="'pick-avatar-seleccionado'"></ion-img>
+              </ion-label>
+              
+              <ion-button (click)="onSeleccionarGrupo(grupo)" expand="full">
+                <ion-icon slot="end" name="ios-arrow-dropright-outline"></ion-icon>
+                Seleccionar
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+
+        </ion-item>
+
+    </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+
+  
+  <ion-card *ngIf="formSelected === 'niveles'">
+    <ion-item color="primary">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>Niveles</ion-label>
+      <ion-button (click)="volverGrupos()" color="light" >
+        <ion-icon slot="end" name="arrow-back"></ion-icon>
+        
+      </ion-button>
+    </ion-item>
+    
+    <ion-card-content>
+      <ion-list>     
+        <ion-item *ngFor="let nivel of niveles">
+          <ion-card>            
+            <ion-card-content>
+              <ion-label>
+                 <h3> {{ nivel.nivel.nombre }}</h3>                  
+              </ion-label>
+              
+              <ion-button (click)="onSeleccionarNivel(nivel)" expand="full">
+                <ion-icon slot="end" name="ios-arrow-dropright"></ion-icon>
+                Seleccionar
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+
+        </ion-item>
+
+    </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+  
+  <ion-card *ngIf="formSelected === 'temas'">
+    <ion-item color="primary">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>Temas</ion-label>
+      <ion-button (click)="volverNiveles()" color="light" >
+        <ion-icon slot="end" name="arrow-back"></ion-icon>
+        
+      </ion-button>
+    </ion-item>
+    
+    <ion-card-content>
+      <ion-list>     
+        <ion-item *ngFor="let niveltema of temas">
+          <ion-card>            
+            <ion-card-content>
+              <ion-label>
+                 <h3> {{ niveltema.tema.nombre }}</h3>                  
+              </ion-label>
+              
+              <ion-button (click)="onSeleccionarTema(niveltema)" expand="full">
+                <ion-icon slot="end" name="ios-arrow-dropright"></ion-icon>
+                Seleccionar
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+
+        </ion-item>
+
+    </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card *ngIf="formSelected === 'lecciones'">
+    <ion-item color="primary">
+      <ion-icon slot="start" name="home"></ion-icon>
+      <ion-label>Lecciones</ion-label>
+      <ion-button (click)="volverTemas()" color="light" >
+        <ion-icon slot="end" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+    <ion-slides pager="ios" class="slide-full" *ngIf="formSelected === 'lecciones'">
+      <ion-slide *ngFor="let leccion of lecciones">
+        <ion-card mode="ios">
+          <img  *ngIf="leccion.archivoPreguntaId > 0" class="height-leccion-image" src="{{ leccionesService.getUrlBase() }}/getById/{{leccion.archivoPreguntaId}}"  alt="{{ leccion.leyenda }}"  >
+  
+          <ion-card-header>
+            <ion-card-subtitle>{{ leccion.leyenda }}</ion-card-subtitle>
+          </ion-card-header>
+  
+          <ion-card-content>
+            <ion-badge color="warning">{{leccion.cantidadPreguntas}}</ion-badge>
+            {{ leccion.leyenda }}            
+            <ion-button [routerLink]="['../leccion-ejecucion/']+ leccion.id" expand="full">
+              <ion-icon slot="end" name="ios-arrow-dropright"></ion-icon>
+              Seleccionar
+            </ion-button>
+          </ion-card-content>
+
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+
+  </ion-card>
+
+</ion-content>
