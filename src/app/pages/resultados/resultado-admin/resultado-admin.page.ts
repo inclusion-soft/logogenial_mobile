@@ -105,9 +105,15 @@ export class ResultadoAdminPage implements OnInit {
 
   cargarHitsResultadosPorEstudiante() {
     this.resultadoPreguntaService.findAllByUsuarioId(this.usuario.id).subscribe(datos =>  {
+      debugger;
       const datosPuntaje = [];
       datosPuntaje.push(datos[0].cantidad);
-      datosPuntaje.push(datos[1].cantidad);
+      if(datos.length > 1) {
+        datosPuntaje.push(datos[1].cantidad);
+      } else{
+        datosPuntaje.push(0);
+      }
+      
       this.totalHits = datosPuntaje[0] + datosPuntaje[1];
       this.chart = new Chart('canvas', {
         type: 'doughnut',
